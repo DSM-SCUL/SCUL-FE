@@ -1,1 +1,1 @@
-# SCUL-FE
+SCUL-FrontEnd Repo입니다.
