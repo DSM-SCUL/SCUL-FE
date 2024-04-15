@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -70,7 +70,7 @@ body {
   font-weight: 300;
   color: black;
   line-height: 1.2;
-  font-family: 'NanumSquare', sans-serif
+  font-family: 'WantedSans'
 }
 .normal		{ font-weight: 400 }
 .bold		{ font-weight: 700 }
