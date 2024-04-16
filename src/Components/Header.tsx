@@ -34,6 +34,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray100};
 `;
 
 const LogoImg = styled.img`
