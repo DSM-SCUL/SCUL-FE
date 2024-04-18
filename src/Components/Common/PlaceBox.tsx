@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import BookMarkIcon from "../assets/img/SVG/BookMark.svg";
-import BookMarkColorIcon from "../assets/img/SVG/BookMarkColor.svg";
+import BookMarkIcon from "../../assets/img/SVG/BookMark.svg";
+import BookMarkColorIcon from "../../assets/img/SVG/BookMarkColor.svg";
 import { useState } from "react";
 
 export const PlaceBox = () => {
@@ -10,31 +10,33 @@ export const PlaceBox = () => {
     setIsBookmarked((prevState) => !prevState);
   };
   return (
-    <Container>
-      <Picture />
-      <PlaceInfoWrapper>
-        <PlaceInfo>
-          <Name>서울 시립 미술관</Name>
-          <Address>서울특별시 가정북로 76 우정관</Address>
-          <ReservePriceWrapper>
-            <ReservePrice>
-              예약 <p>가능</p>
-            </ReservePrice>
-            <ReservePrice>
-              이용료 <p>무료</p>
-            </ReservePrice>
-          </ReservePriceWrapper>
-          <TagWrapper>
-            <Tag>장애인</Tag>
-            <Tag>유아</Tag>
-          </TagWrapper>
-        </PlaceInfo>
-        <BookMark
-          src={isBookmarked ? BookMarkColorIcon : BookMarkIcon}
-          onClick={toggleBookmark}
-        />
-      </PlaceInfoWrapper>
-    </Container>
+    <>
+      <Container>
+        <Picture />
+        <PlaceInfoWrapper>
+          <PlaceInfo>
+            <Name>서울 시립 미술관</Name>
+            <Address>서울특별시 가정북로 76 우정관</Address>
+            <ReservePriceWrapper>
+              <ReservePrice>
+                예약 <p>가능</p>
+              </ReservePrice>
+              <ReservePrice>
+                이용료 <p>무료</p>
+              </ReservePrice>
+            </ReservePriceWrapper>
+            <TagWrapper>
+              <Tag>장애인</Tag>
+              <Tag>유아</Tag>
+            </TagWrapper>
+          </PlaceInfo>
+          <BookMark
+            src={isBookmarked ? BookMarkColorIcon : BookMarkIcon}
+            onClick={toggleBookmark}
+          />
+        </PlaceInfoWrapper>
+      </Container>
+    </>
   );
 };
 
@@ -42,7 +44,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-
+  border-radius: 8px;
   width: 302px;
   height: 247px;
   padding: 12px 20px;

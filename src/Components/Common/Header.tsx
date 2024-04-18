@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import MyPage from "../assets/img/SVG/MyPage.svg";
-import Logo from "../assets/img/SVG/Logo.svg";
-import Search from "../assets/img/SVG/Search.svg";
+import MyPage from "../../assets/img/SVG/MyPage.svg";
+import Logo from "../../assets/img/SVG/Logo.svg";
+import Search from "../../assets/img/SVG/Search.svg";
 
 export const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -32,7 +32,7 @@ export const Header = () => {
 const Container = styled.div`
   height: 64px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray100};
 `;
