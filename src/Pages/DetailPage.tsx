@@ -1,26 +1,33 @@
 import styled from "styled-components"
+import { Header } from "../Components/Header";
 import { DetailBox } from "../Components/Detail/DetailBox";
 import { ReviewBox } from "../Components/Detail/ReviewBox";
+import { Link } from "react-router-dom";
 
 export const DetailPage = () =>  {
     return (
-        <Wrapper>
-            <DetailWrapper>
-                <Picture></Picture>
-                <DetailBox />
-            </DetailWrapper>
-            <Border></Border>
-            <ReviewHeaderWrapper>
-                <div style={{fontSize: '24px', fontWeight: '600'}}>리뷰</div>
-                <Button>리뷰 작성</Button>
-            </ReviewHeaderWrapper>
-            <ReviewBoxWrapper>
-                <ReviewBox />
-                <ReviewBox />
-                <ReviewBox />
-                <ReviewBox />
-            </ReviewBoxWrapper>
-        </Wrapper>
+        <>
+            <Header />
+            <Wrapper>
+                <DetailWrapper>
+                    <Picture></Picture>
+                    <DetailBox />
+                </DetailWrapper>
+                <Border></Border>
+                <ReviewHeaderWrapper>
+                    <div style={{fontSize: '24px', fontWeight: '600'}}>리뷰</div>
+                    <Link to={"/write"}>
+                        <Button>리뷰 작성</Button>
+                    </Link>
+                </ReviewHeaderWrapper>
+                <ReviewBoxWrapper>
+                    <ReviewBox />
+                    <ReviewBox />
+                    <ReviewBox />
+                    <ReviewBox />
+                </ReviewBoxWrapper>
+            </Wrapper>
+        </>
     )
 }
 
@@ -28,6 +35,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 108px;
 `;
 
 const DetailWrapper = styled.div`
