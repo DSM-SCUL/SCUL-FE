@@ -1,21 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
 import { DetailPage } from "./Pages/DetailPage";
-import { MainPage } from "./Page/MainPage";
+import { ReviewWritePage } from "./Pages/ReviewWritePage";
 
 const Router = createBrowserRouter([
-  {
-    path: "",
-    children: [
-      {
-        path: "/detail",
-        element: <DetailPage />,
-      },
-      {
-        path: "/",
-        element: <MainPage />,
-      },
-    ],
-  },
+    {
+        path: '',
+        children: [
+            {
+                path: '/detail',
+                element: <DetailPage />
+            },
+            {
+                path: '/write',
+                element: <ReviewWritePage />
+            }
+        ],
+    },
 ]);
 
 export default Router;
