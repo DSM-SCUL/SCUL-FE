@@ -42,6 +42,7 @@ const Wrapper = styled.div`
 `;
 
 const PlaceWrapper = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
@@ -52,8 +53,9 @@ const PlaceWrapper = styled.div`
 
 const ArrowIcon = styled.img`
   position: absolute;
-  bottom: -130px;
   right: 20%;
+  bottom: -15%;
+  align-items: end;
   width: 70px;
   height: 70px;
 `;
