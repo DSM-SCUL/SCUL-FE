@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import MyPage from "../../Assets/img/SVG/MyPage.svg";
 import Logo from "../../Assets/img/SVG/Logo.svg";
-import Search from "../../Assets/img/SVG/Search.svg"
+import Search from "../../Assets/img/SVG/Search.svg";
 import { MyPageModal } from "../MyPage/MyPageModal";
 
 export const Header = () => {
@@ -16,7 +16,7 @@ export const Header = () => {
 
   const toggleMyPageModalVisibility = () => {
     setIsMyPageModalVisible((prevState) => !prevState);
-  }
+  };
 
   return (
     <Container>
@@ -33,7 +33,7 @@ export const Header = () => {
         )}
       </SearchWrapper>
       <MyPageModalWrapper isMyPageModalVisible={isMyPageModalVisible}>
-          <MyPageModal />
+        <MyPageModal />
       </MyPageModalWrapper>
     </Container>
   );
@@ -41,6 +41,7 @@ export const Header = () => {
 
 const Container = styled.div`
   position: fixed;
+  top: 0px;
   width: 100%;
   height: 64px;
   display: flex;
@@ -114,7 +115,8 @@ const MyPageIcon = styled.img`
 
 const MyPageModalWrapper = styled.div<{ isMyPageModalVisible: boolean }>`
   position: fixed;
-  margin-top: ${({ isMyPageModalVisible }) => (isMyPageModalVisible ? "500px" : "-900%")};
+  margin-top: ${({ isMyPageModalVisible }) =>
+    isMyPageModalVisible ? "500px" : "-900%"};
   left: 62%;
   z-index: 999;
 `;

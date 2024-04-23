@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { Header } from "../Components/Common/Header";
 import { Tag } from "../Components/Main/Tag";
 import { PlaceBox } from "../Components/Common/PlaceBox";
-import Arrow from "../assets/img/SVG/Arrow.svg";
-import NoResult from "../assets/img/SVG/NoResult.svg";
+import Arrow from "../Assets/img/SVG/Arrow.svg";
+import NoResult from "../Assets/img/SVG/NoResult.svg";
 import { useState } from "react";
 
 export const SearchPage = () => {
-  const [searchResultExists, setSearchResultExists] = useState(false);
+  const [searchResultExists, setSearchResultExists] = useState(true);
   return (
     <Container>
       <Header />
@@ -48,7 +48,7 @@ const Wrapper = styled.div`
   gap: 36px;
   max-width: 960px;
   width: 100%;
-  margin: 48px auto auto;
+  margin: 92px auto auto;
 `;
 
 const PlaceWrapper = styled.div`

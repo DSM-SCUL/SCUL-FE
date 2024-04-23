@@ -38,7 +38,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 92px;
 `;
 
 const PlaceWrapper = styled.div`
