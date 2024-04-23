@@ -1,10 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import MyPage from "../../Assets/img/SVG/MyPage.svg"
+import MyPage from "../../Assets/img/SVG/MyPage.svg";
 import Logo from "../../Assets/img/SVG/Logo.svg";
 import Search from "../../Assets/img/SVG/Search.svg"
 import { MyPageModal } from "../MyPage/MyPageModal";
-
 
 export const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -41,11 +40,14 @@ export const Header = () => {
 };
 
 const Container = styled.div`
+  position: fixed;
+  width: 100%;
   height: 64px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray100};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const LogoImg = styled.img`
