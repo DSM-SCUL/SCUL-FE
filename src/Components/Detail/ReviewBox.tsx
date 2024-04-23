@@ -47,9 +47,8 @@ const ReviewPictureWrapper = styled.div`
     gap: 12px;
 `;
 
-const ReviewPicture = styled.div`
+const ReviewPicture = styled.img`
     width: 100px;
     height: 100px;
     border-radius: 4px;
-    background-color: ${({theme})=> theme.colors.gray100};
 `;

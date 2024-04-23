@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { PlaceBox } from "../Components/Common/PlaceBox";
 import { Header } from "../Components/Common/Header";
 import { MiddleContainer } from "../Components/Main/MiddleContainer";
-import BannerImg from "../assets/img/PNG/Banner.png";
-import Arrow from "../assets/img/SVG/Arrow.svg";
+import BannerImg from "../Assets/img/PNG/Banner.png";
+import Arrow from "../Assets/img/SVG/Arrow.svg";
 
 export const MainPage = () => {
   return (

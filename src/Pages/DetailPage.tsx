@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Header } from "../Components/Header";
+import { Header } from "../Components/Common/Header";
 import { DetailBox } from "../Components/Detail/DetailBox";
 import { ReviewBox } from "../Components/Detail/ReviewBox";
 import { Link } from "react-router-dom";
@@ -43,10 +43,9 @@ const DetailWrapper = styled.div`
     gap: 40px;
 `;
 
-const Picture = styled.div`
+const Picture = styled.img`
     width: 500px;
     height: 500px;
-    background-color: #DADADA;
     border-radius: 8px;
 `;
 

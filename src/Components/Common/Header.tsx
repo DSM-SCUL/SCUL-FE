@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import MyPage from "../Assets/img/SVG/MyPage.svg"
-import Logo from "../Assets/img/SVG/Logo.svg";
-import Search from "../Assets/img/SVG/Search.svg"
+import MyPage from "../../Assets/img/SVG/MyPage.svg"
+import Logo from "../../Assets/img/SVG/Logo.svg";
+import Search from "../../Assets/img/SVG/Search.svg"
+
 
 export const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
