@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { Header } from "../Components/Common/Header";
+import { useState, ChangeEvent } from "react";
 import { Id } from "../Components/Common/Id";
 import { Password } from "../Components/Common/Password";
-import { useState, ChangeEvent } from "react";
 
-export const LoginPage = () => {
+export const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [id, setId] = useState("");
+  const [name, setName] = useState("");
   const [isError, setIsError] = useState<boolean>(true);
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "password") {
@@ -16,16 +17,21 @@ export const LoginPage = () => {
     }
   };
 
-  const isButtonActive = id.length > 5 && password.length > 5;
+  const isButtonActive =
+    id.length > 5 && password.length > 5 && name.length > 2;
 
   return (
     <Container>
       <Header />
       <Wrapper>
         <Title>
-          로그인하고
+          회원가입하고
           <br /> SCUL을 사용해보세요
         </Title>
+        <InputWrapper>
+          <Text>이름</Text>
+          <Id id="name" placeholder="이름" onChange={onChange} value={name} />
+        </InputWrapper>
         <InputWrapper>
           <Text>아이디</Text>
           <Id id="id" placeholder="아이디" onChange={onChange} value={id} />
@@ -38,14 +44,14 @@ export const LoginPage = () => {
             onChange={onChange}
             value={password}
           />
-          {isError && <Error>다시 확인해주세요.</Error>}
+          {isError && <Error>이미 있는 아이디입니다.</Error>}
         </InputWrapper>
       </Wrapper>
       <ButtonWrapper>
         <SignUp>
-          아직 회원이 아니라면?&nbsp;<a href="/">회원가입 하기</a>
+          이미 회원이라면?&nbsp;<a href="/">로그인 하기</a>
         </SignUp>
-        <Button isActive={isButtonActive}>로그인</Button>
+        <Button isActive={isButtonActive}>가입하기</Button>
       </ButtonWrapper>
     </Container>
   );
@@ -55,7 +61,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 200px;
+  gap: 160px;
+  margin-bottom: 50px;
 `;
 
 const Wrapper = styled.div`
