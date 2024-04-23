@@ -1,8 +1,13 @@
 import styled from "styled-components"
 import { useRef } from "react";
 import AddButton from "../../Assets/img/SVG/AddButton.svg";
+import { useState } from "react";
 
-export const PictureBox = () => {
+interface PictrueBoxProps {
+    onPictureAdded: () => void;
+}
+export const PictureBox: React.FC<PictrueBoxProps> = ({onPictureAdded}) => {
+    const [, setPictureAdded] = useState(false);
     const ref = useRef<HTMLInputElement>(null);
 
     const fileHandler = () => {
@@ -10,6 +15,11 @@ export const PictureBox = () => {
             ref.current!.click();
         }
     };
+
+    const handlePictureAdded = () => {
+        setPictureAdded(true);
+        onPictureAdded();
+    }
 
     return (
         <PictureContainer>
@@ -20,6 +30,7 @@ export const PictureBox = () => {
                         type="file" 
                         style={{display:'none'}}
                         ref={ref}
+                        onChange={handlePictureAdded}
                     />
                     <img src={AddButton} alt="버튼" />
                 </AddButtonBox>
@@ -56,9 +67,8 @@ const AddButtonBox = styled.div`
     cursor: pointer;
 `;
 
-const Picture = styled.div`
+const Picture = styled.img`
     width: 100px;
     height: 100px;
-    background-color: ${({theme}) => theme.colors.gray50};
     border-radius: 8px;
 `;

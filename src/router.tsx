@@ -1,7 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import { DetailPage } from "./Pages/DetailPage";
-import { MainPage } from "./Pages/MainPage";
 import { SearchPage } from "./Pages/SearchPage";
+import { ReviewWritePage } from "./Pages/ReviewWritePage";
+import { MainPage } from "./Pages/MainPage";
+import { LoginPage } from "./Pages/LoginPage";
+import { SignUpPage } from "./Pages/SignUpPage";
 
 const Router = createBrowserRouter([
   {
@@ -22,9 +25,17 @@ const Router = createBrowserRouter([
        {
           path: '/write',
           element: <ReviewWritePage />
-       }
-        ],
-    },
+      },
+      {
+        path: "/Login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/Signup",
+        element: <SignUpPage />,
+      },
+    ],
+  },
 ]);
 
 export default Router;

@@ -1,15 +1,27 @@
 import styled from "styled-components";
-import Save from "../../assets/img/SVG/saveIcon.svg";
 import { MapBox } from "./MapBox";
+import { Tag } from "../Main/Tag";
+import BookMarkIcon from "../../Assets/img/SVG/BookMark.svg";
+import BookMarkColorIcon from "../../Assets/img/SVG/BookMarkColor.svg";
+import { useState } from "react";
 
 export const DetailBox = () => {
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const toggleBookmark = () => {
+    setIsBookmarked((prevState) => !prevState);
+  };
+
   return (
     <DetailContainer>
       <TitleWrapper>
         <Title>서울 시립 미술관</Title>
-        <SaveIcon src={Save}></SaveIcon>
+        <BookMark
+          src={isBookmarked ? BookMarkColorIcon : BookMarkIcon}
+          onClick={toggleBookmark}
+        />
       </TitleWrapper>
-      <TagBox></TagBox>
+      <Tag />
       <InputContainer>
         <InputBox>
           <InputTitle>전화번호</InputTitle>
@@ -24,7 +36,7 @@ export const DetailBox = () => {
         <UserFeeWrapper>
           <div style={{ fontSize: "16px", fontWeight: "500" }}>이용료</div>
           <Button
-            style={{ color: "white", fontSize: "16px", cursor: "pointer" }}
+            style={{ color: "white", fontSize: "16px" }}
           >
             무료
           </Button>
@@ -61,12 +73,10 @@ const Title = styled.div`
   font-weight: 600;
 `;
 
-const SaveIcon = styled.img``;
-
-const TagBox = styled.div`
-  width: 308px;
-  height: 39px;
-  background-color: #dadada;
+const BookMark = styled.img`
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
 `;
 
 const InputContainer = styled.div`

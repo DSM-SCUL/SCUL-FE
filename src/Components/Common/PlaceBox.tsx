@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import BookMarkIcon from "../../assets/img/SVG/BookMark.svg";
-import BookMarkColorIcon from "../../assets/img/SVG/BookMarkColor.svg";
+import BookMarkIcon from "../../Assets/img/SVG/BookMark.svg";
+import BookMarkColorIcon from "../../Assets/img/SVG/BookMarkColor.svg";
 import { useState } from "react";
 
 export const PlaceBox = () => {

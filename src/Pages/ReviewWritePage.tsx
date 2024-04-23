@@ -1,8 +1,21 @@
-import styled from "styled-components"
-import { Header } from "../Components/Header";
+import styled from "styled-components";
+import { Header } from "../Components/Common/Header";
 import { PictureBox } from "../Components/ReviewWrite/PictureBox";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export const ReviewWritePage = () => {
+    const [pictureAdded, setPictureAdded] = useState(false);
+    const [reviewContent, setReviewContent] = useState("");
+
+    const handlePictureAdded = () => {
+        setPictureAdded(true);
+    }
+
+    const handleContentChange = (e: any) => {
+        setReviewContent(e.target.value);
+    }
+
     return (
         <>
             <Header />
@@ -18,11 +31,20 @@ export const ReviewWritePage = () => {
                             <p style={{fontSize: '16px', fontWeight: '500'}}>내용</p>
                             <p style={{fontSize: '16px', fontWeight: '500', color:'#FF5271'}}>*</p>
                         </div>
-                        <Content placeholder="리뷰의 내용을 작성해주세요"></Content>
+                        <Content 
+                            placeholder="리뷰의 내용을 작성해주세요"
+                            onChange={handleContentChange}
+                        ></Content>
                     </ContentBox>
-                    <PictureBox />
+                    <PictureBox onPictureAdded={handlePictureAdded} />
                 </ReviewWriteWrapper>
-                <SubmitButton>리뷰 등록하기</SubmitButton>
+                <Link to={'/'}>
+                    <SubmitButton
+                        pictureAdded={pictureAdded && reviewContent !== ""}
+                        disabled={!pictureAdded || reviewContent === ""}
+                    >리뷰 등록하기
+                    </SubmitButton>
+                </Link>
             </Wrapper>
         </>
     )
@@ -99,13 +121,14 @@ const Content = styled.textarea`
     }
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled.button<{ pictureAdded: boolean, disabled: boolean }>`
     width: 520px;
     height: 56px;
     border-radius: 8px;
-    background-color: ${({theme}) => theme.colors.main500};
+    background-color: ${({theme, pictureAdded, disabled}) => 
+        pictureAdded ? (disabled ? theme.colors.gray200 : theme.colors.main500) : theme.colors.gray200};
     border: none;
-    cursor: pointer;
+    cursor: ${({disabled}) => (disabled ? 'not-allowed' : 'pointer')};
     display: flex;
     justify-content: center;
     align-items: center;
