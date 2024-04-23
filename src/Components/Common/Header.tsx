@@ -3,15 +3,22 @@ import styled from "styled-components";
 import MyPage from "../../Assets/img/SVG/MyPage.svg"
 import Logo from "../../Assets/img/SVG/Logo.svg";
 import Search from "../../Assets/img/SVG/Search.svg"
+import { MyPageModal } from "../MyPage/MyPageModal";
 
 
 export const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isInputVisible, setIsInputVisible] = useState(false);
+  const [isMyPageModalVisible, setIsMyPageModalVisible] = useState(false);
 
   const toggleInputVisibility = () => {
     setIsInputVisible((prevState) => !prevState);
   };
+
+  const toggleMyPageModalVisibility = () => {
+    setIsMyPageModalVisible((prevState) => !prevState);
+  }
+
   return (
     <Container>
       <LogoImg src={Logo} />
@@ -21,11 +28,14 @@ export const Header = () => {
           <SearchIcon src={Search} onClick={toggleInputVisibility} />
         </InputContainer>
         {isLogin ? (
-          <MyPageIcon src={MyPage} />
+          <MyPageIcon src={MyPage} onClick={toggleMyPageModalVisibility} />
         ) : (
           <LoginButton onClick={() => setIsLogin(true)}>로그인</LoginButton>
         )}
       </SearchWrapper>
+      <MyPageModalWrapper isMyPageModalVisible={isMyPageModalVisible}>
+          <MyPageModal />
+      </MyPageModalWrapper>
     </Container>
   );
 };
@@ -41,6 +51,7 @@ const Container = styled.div`
 const LogoImg = styled.img`
   width: 112.8px;
   height: 30px;
+  cursor: pointer;
 `;
 
 const SearchWrapper = styled.div`
@@ -80,6 +91,7 @@ const SearchIcon = styled.img`
   right: 12px;
   width: 32px;
   height: 32px;
+  cursor: pointer;
 `;
 
 const LoginButton = styled.button`
@@ -95,4 +107,12 @@ const LoginButton = styled.button`
 const MyPageIcon = styled.img`
   width: 32px;
   height: 32px;
+  cursor: pointer;
+`;
+
+const MyPageModalWrapper = styled.div<{ isMyPageModalVisible: boolean }>`
+  position: fixed;
+  margin-top: ${({ isMyPageModalVisible }) => (isMyPageModalVisible ? "500px" : "-900%")};
+  left: 62%;
+  z-index: 999;
 `;
