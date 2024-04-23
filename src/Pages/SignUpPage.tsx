@@ -14,6 +14,8 @@ export const SignUpPage = () => {
       setPassword(e.target.value);
     } else if (e.target.id === "id") {
       setId(e.target.value);
+    } else if (e.target.id === "name") {
+      setName(e.target.value);
     }
   };
 
