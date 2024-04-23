@@ -3,34 +3,48 @@ import { Header } from "../Components/Common/Header";
 import { Tag } from "../Components/Main/Tag";
 import { PlaceBox } from "../Components/Common/PlaceBox";
 import Arrow from "../assets/img/SVG/Arrow.svg";
+import NoResult from "../assets/img/SVG/NoResult.svg";
+import { useState } from "react";
 
 export const SearchPage = () => {
+  const [searchResultExists, setSearchResultExists] = useState(false);
   return (
     <Container>
       <Header />
-      <Wrapper>
-        <Tag />
-        <PlaceWrapper>
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-        </PlaceWrapper>
-        <ArrowIcon src={Arrow} />
-      </Wrapper>
+      {searchResultExists ? (
+        <Wrapper>
+          <Tag />
+          <PlaceWrapper>
+            <PlaceBox />
+            <PlaceBox />
+            <PlaceBox />
+            <PlaceBox />
+            <PlaceBox />
+            <PlaceBox />
+            <PlaceBox />
+            <PlaceBox />
+          </PlaceWrapper>
+          <ArrowIcon src={Arrow} />
+        </Wrapper>
+      ) : (
+        <Wrapper>
+          <NoSearchResult src={NoResult} />
+          <Text>검색 결과가 없습니다.</Text>
+        </Wrapper>
+      )}
     </Container>
   );
 };
-const Container = styled.div``;
+const Container = styled.div`
+  height: 100vh;
+`;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: end;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   gap: 36px;
   max-width: 960px;
   width: 100%;
@@ -53,4 +67,15 @@ const ArrowIcon = styled.img`
   right: 20%;
   width: 70px;
   height: 70px;
+`;
+
+const Text = styled.p`
+  color: ${({ theme }) => theme.colors.gray900};
+  font-size: 32px;
+  font-weight: 600;
+`;
+
+const NoSearchResult = styled.img`
+  width: 280px;
+  height: 220px;
 `;
