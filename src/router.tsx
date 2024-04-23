@@ -18,9 +18,13 @@ const Router = createBrowserRouter([
       {
         path: "/Search",
         element: <SearchPage />,
-      },
-    ],
-  },
+       },
+       {
+          path: '/write',
+          element: <ReviewWritePage />
+       }
+        ],
+    },
 ]);
 
 export default Router;
