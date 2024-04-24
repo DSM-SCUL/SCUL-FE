@@ -64,7 +64,6 @@ const ReviewHeaderWrapper = styled.div`
     margin-top: 28px;
 `;
 
-// 컴포넌트로 뺄 예정
 const Button = styled.button`
     padding: 4px 12px;
     display: flex;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import MyReview from "../../Assets/img/SVG/MyReview.svg";
 import BookMark from "../../Assets/img/SVG/MyPageBookMark.svg";
 import Logout from "../../Assets/img/SVG/Logout.svg";
+import { Link } from "react-router-dom";
 
 export const MyPageModal = () => {
     return (
@@ -12,10 +13,12 @@ export const MyPageModal = () => {
             </ProfileWrap>
             <p>보기</p>
             <ShowWrap>
-                <BoxWrap>
-                    <img src={MyReview} alt="리뷰 아이콘"/>
-                    <p>내가 작성한 리뷰</p>
-                </BoxWrap>
+                <Link to={'/myReview'}>
+                    <BoxWrap>
+                        <img src={MyReview} alt="리뷰 아이콘"/>
+                        <p>내가 작성한 리뷰</p>
+                    </BoxWrap>
+                </Link>
                 <BoxWrap>
                     <img src={BookMark} alt="북마크"/>
                     <p>북마크</p>

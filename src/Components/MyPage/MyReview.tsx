@@ -1,8 +1,10 @@
 import styled from "styled-components"
 
-export const ReviewBox = () => {
+
+export const MyReviewBox = () => {
     return (
         <ReviewContainer>
+            <PlaceName>서울 시립 미술관에서</PlaceName>
             <UserInfoWrapper>
                 <UserInfo>강*민</UserInfo>
                 <UserInfo>2024. 04. 15</UserInfo>
@@ -22,17 +24,24 @@ export const ReviewBox = () => {
     )
 }
 
+
 const ReviewContainer = styled.div`
     display: flex;
-    padding: 16px 0px;
+    padding: 20px 0px;
     flex-direction: column;
     width: 960px;
     justify-content: space-between;
     gap: 20px;
+    border-bottom: 6px solid ${({theme}) => theme.colors.gray50};
     > p {
         font-size: 20px;
         font-weight: 500;
     }
+`;
+
+const PlaceName = styled.p`
+    font-size: 20px;
+    font-weight: 500;
 `;
 
 const UserInfoWrapper = styled.div`
