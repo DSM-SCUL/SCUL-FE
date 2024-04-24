@@ -3,8 +3,20 @@ import MyReview from "../../Assets/img/SVG/MyReview.svg";
 import BookMark from "../../Assets/img/SVG/MyPageBookMark.svg";
 import Logout from "../../Assets/img/SVG/Logout.svg";
 import { Link } from "react-router-dom";
+import { LogoutModal } from "./LogoutModal";
+import { useState } from "react";
 
 export const MyPageModal = () => {
+    const [isLogout, setIsLogout] = useState(false);
+
+    const handleLogout = () => {
+        setIsLogout(true);
+    }
+
+    const handleCloseModal = () => {
+        setIsLogout(false);
+    }
+
     return (
         <MyPageModalContainer>
             <ProfileWrap>
@@ -27,13 +39,15 @@ export const MyPageModal = () => {
                 </Link>
             </ShowWrap>
             <p>계정</p>
-            <BoxWrap>
+            <BoxWrap onClick={handleLogout}>
                 <img src={Logout} alt="로그아웃 아이콘" />
                 <p>로그아웃</p>
             </BoxWrap>
+            {isLogout && <LogoutModal onClose={handleCloseModal} />}
         </MyPageModalContainer>
     )
 }
+
 
 const MyPageModalContainer = styled.div`
     display: flex;
