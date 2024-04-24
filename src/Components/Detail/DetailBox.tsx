@@ -21,7 +21,9 @@ export const DetailBox = () => {
           onClick={toggleBookmark}
         />
       </TitleWrapper>
-      <Tag />
+      <div>
+        <Tag />
+      </div>
       <InputContainer>
         <InputBox>
           <InputTitle>전화번호</InputTitle>
@@ -30,6 +32,14 @@ export const DetailBox = () => {
         <InputBox>
           <InputTitle>이용시간</InputTitle>
           <Input>8:00~14:00</Input>
+        </InputBox>
+        <InputBox>
+          <InputTitle>접수 일정</InputTitle>
+          <Input>041-1234-5678</Input>
+        </InputBox>
+        <InputBox>
+          <InputTitle>운영 일정</InputTitle>
+          <Input>041-1234-5678</Input>
         </InputBox>
       </InputContainer>
       <UsageMapContainer>
@@ -54,6 +64,11 @@ export const DetailBox = () => {
     </DetailContainer>
   );
 };
+
+
+const TagWrap = styled.div`
+
+`;
 
 const DetailContainer = styled.div`
   display: flex;
@@ -84,7 +99,7 @@ const InputContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 16px;
-  height: 86px;
+  height: 156px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray50};
   border-bottom: 4px solid ${({ theme }) => theme.colors.gray50};
 `;
