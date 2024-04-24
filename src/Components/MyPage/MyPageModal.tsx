@@ -19,10 +19,12 @@ export const MyPageModal = () => {
                         <p>내가 작성한 리뷰</p>
                     </BoxWrap>
                 </Link>
-                <BoxWrap>
-                    <img src={BookMark} alt="북마크"/>
-                    <p>북마크</p>
-                </BoxWrap>
+                <Link to={'/BookMark'}>
+                    <BoxWrap>
+                        <img src={BookMark} alt="북마크"/>
+                        <p>북마크</p>
+                    </BoxWrap>
+                </Link>
             </ShowWrap>
             <p>계정</p>
             <BoxWrap>
