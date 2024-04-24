@@ -5,6 +5,7 @@ import { ReviewWritePage } from "./Pages/ReviewWritePage";
 import { MainPage } from "./Pages/MainPage";
 import { LoginPage } from "./Pages/LoginPage";
 import { SignUpPage } from "./Pages/SignUpPage";
+import { MyReviewPage } from "./Pages/MyReviewPage";
 
 const Router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const Router = createBrowserRouter([
       {
         path: "/Search",
         element: <SearchPage />,
+      },
+      {
+        path: "/MyReview",
+        element: <MyReviewPage />
       },
       {
         path: "/write",

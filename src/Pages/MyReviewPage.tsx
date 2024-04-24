@@ -24,7 +24,6 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 28px;
-    height: calc(100vh - 64px);
 `;
 
 const ReviewHeader = styled.div`
@@ -32,7 +31,7 @@ const ReviewHeader = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 40px;
-    margin-top: 64px;
+    margin-top: 128px;
     > p {
         font-size: 32px;
         font-weight: 600;

@@ -56,7 +56,7 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     gap: 100px;
-    height: calc(100vh - 64px);
+    margin-top: calc(94px + 64px);
 `;
 
 const ReviewWriteWrapper = styled.div`

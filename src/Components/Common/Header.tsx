@@ -44,6 +44,7 @@ export const Header = () => {
 
 const Container = styled.div`
   position: fixed;
+  z-index: 1000;
   top: 0px;
   width: 100%;
   height: 64px;
