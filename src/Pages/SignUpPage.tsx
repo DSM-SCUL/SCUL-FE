@@ -3,6 +3,8 @@ import { Header } from "../Components/Common/Header";
 import { useState, ChangeEvent } from "react";
 import { Id } from "../Components/Common/Id";
 import { Password } from "../Components/Common/Password";
+import { login } from "../Apis/auth";
+import { Cookie } from "../Utils/cookie";
 
 export const SignUpPage = () => {
   const [password, setPassword] = useState("");
@@ -21,6 +23,25 @@ export const SignUpPage = () => {
 
   const isButtonActive =
     id.length > 5 && password.length > 5 && name.length > 2;
+
+  const handleEnterLogin = () => {
+    login({
+      accountId: id,
+      password: password,
+    })
+      .then((res) => {
+        Cookie.set("access_token", res.data.accessToken);
+        Cookie.set("refresh_token", res.data.refreshToken);
+      })
+      .catch(() => {
+        setPassword("");
+        setIsError(true);
+      });
+  };
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleEnterLogin();
+  };
 
   return (
     <Container>
@@ -45,6 +66,7 @@ export const SignUpPage = () => {
             placeholder="비밀번호"
             onChange={onChange}
             value={password}
+            onKeyDown={handleEnter}
           />
           {isError && <Error>이미 있는 아이디입니다.</Error>}
         </InputWrapper>

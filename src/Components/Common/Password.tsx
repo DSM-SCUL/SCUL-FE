@@ -7,6 +7,7 @@ interface PasswordProps {
   placeholder: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
+  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export const Password = ({
@@ -14,6 +15,7 @@ export const Password = ({
   placeholder,
   onChange,
   value,
+  onKeyDown,
 }: PasswordProps) => {
   const [isOpenPasswordEye, setIsOpenPasswordEye] = useState(false);
   const onEyeClickHandle = () => {
@@ -27,6 +29,7 @@ export const Password = ({
         onChange={onChange}
         value={value}
         type={isOpenPasswordEye ? "text" : "password"}
+        onKeyDown={onKeyDown}
       />
       <Eye isShowPassword={isOpenPasswordEye} onClick={onEyeClickHandle} />
     </Container>
