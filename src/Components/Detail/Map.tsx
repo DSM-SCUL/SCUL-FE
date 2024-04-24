@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Map } from "react-kakao-maps-sdk";
 
 export const MapComponent = () => {

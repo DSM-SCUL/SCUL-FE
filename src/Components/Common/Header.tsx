@@ -4,6 +4,7 @@ import MyPage from "../../Assets/img/SVG/MyPage.svg"
 import Logo from "../../Assets/img/SVG/Logo.svg";
 import Search from "../../Assets/img/SVG/Search.svg"
 import { MyPageModal } from "../MyPage/MyPageModal";
+import { Link } from "react-router-dom";
 
 
 export const Header = () => {
@@ -21,7 +22,9 @@ export const Header = () => {
 
   return (
     <Container>
-      <LogoImg src={Logo} />
+      <Link to={'/'}>
+        <LogoImg src={Logo} />
+      </Link>
       <SearchWrapper>
         <InputContainer>
           {isInputVisible && <Input placeholder="문화 생활 검색" />}
@@ -102,6 +105,7 @@ const LoginButton = styled.button`
   border: none;
   border-radius: 20px;
   padding: 0px 38px;
+  cursor: pointer;
 `;
 
 const MyPageIcon = styled.img`

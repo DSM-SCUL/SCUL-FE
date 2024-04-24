@@ -2,6 +2,7 @@ import styled from "styled-components";
 import BookMarkIcon from "../../Assets/img/SVG/BookMark.svg";
 import BookMarkColorIcon from "../../Assets/img/SVG/BookMarkColor.svg";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const PlaceBox = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -15,7 +16,9 @@ export const PlaceBox = () => {
         <Picture />
         <PlaceInfoWrapper>
           <PlaceInfo>
-            <Name>서울 시립 미술관</Name>
+            <Link to={'/detail'}>
+              <Name>서울 시립 미술관</Name>
+            </Link>
             <Address>서울특별시 가정북로 76 우정관</Address>
             <ReservePriceWrapper>
               <ReservePrice>
