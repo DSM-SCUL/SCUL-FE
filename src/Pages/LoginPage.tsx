@@ -3,11 +3,13 @@ import { Header } from "../Components/Common/Header";
 import { Id } from "../Components/Common/Id";
 import { Password } from "../Components/Common/Password";
 import { useState, ChangeEvent } from "react";
+import { Cookie } from "../Utils/cookie";
+import { login } from "../Apis/users";
 
 export const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [id, setId] = useState("");
-  const [isError, setIsError] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "password") {
       setPassword(e.target.value);
@@ -17,6 +19,42 @@ export const LoginPage = () => {
   };
 
   const isButtonActive = id.length > 5 && password.length > 5;
+
+  const handleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+
+    login({
+      accountId: id,
+      password: password,
+    })
+      .then((res) => {
+        Cookie.set("access_token", res.data.accessToken);
+        Cookie.set("refresh_token", res.data.refreshToken);
+      })
+      .catch(() => {
+        setPassword("");
+        setIsError(true);
+      });
+  };
+
+  const handleEnterLogin = () => {
+    login({
+      accountId: id,
+      password: password,
+    })
+      .then((res) => {
+        Cookie.set("access_token", res.data.accessToken);
+        Cookie.set("refresh_token", res.data.refreshToken);
+      })
+      .catch(() => {
+        setPassword("");
+        setIsError(true);
+      });
+  };
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleEnterLogin();
+  };
 
   return (
     <Container>
@@ -37,6 +75,7 @@ export const LoginPage = () => {
             placeholder="비밀번호"
             onChange={onChange}
             value={password}
+            onKeyDown={handleEnter}
           />
           {isError && <Error>다시 확인해주세요.</Error>}
         </InputWrapper>
@@ -45,7 +84,9 @@ export const LoginPage = () => {
         <SignUp>
           아직 회원이 아니라면?&nbsp;<a href="/">회원가입 하기</a>
         </SignUp>
-        <Button isActive={isButtonActive}>로그인</Button>
+        <Button isActive={isButtonActive} onClick={handleLogin}>
+          로그인
+        </Button>
       </ButtonWrapper>
     </Container>
   );
