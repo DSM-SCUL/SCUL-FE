@@ -4,7 +4,7 @@ import { Id } from "../Components/Common/Id";
 import { Password } from "../Components/Common/Password";
 import { useState, ChangeEvent } from "react";
 import { Cookie } from "../Utils/cookie";
-import { login } from "../Apis/auth";
+import { login } from "../Apis/users";
 
 export const LoginPage = () => {
   const [password, setPassword] = useState("");

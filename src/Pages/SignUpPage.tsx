@@ -3,8 +3,7 @@ import { Header } from "../Components/Common/Header";
 import { useState, ChangeEvent } from "react";
 import { Id } from "../Components/Common/Id";
 import { Password } from "../Components/Common/Password";
-import { login } from "../Apis/auth";
-import { Cookie } from "../Utils/cookie";
+import { signup } from "../Apis/users";
 
 export const SignUpPage = () => {
   const [password, setPassword] = useState("");
@@ -22,16 +21,32 @@ export const SignUpPage = () => {
   };
 
   const isButtonActive =
-    id.length > 5 && password.length > 5 && name.length > 2;
+    id.length > 5 && password.length > 5 && name.length >= 2;
 
-  const handleEnterLogin = () => {
-    login({
+  const handleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    signup({
+      name: name,
       accountId: id,
       password: password,
     })
       .then((res) => {
-        Cookie.set("access_token", res.data.accessToken);
-        Cookie.set("refresh_token", res.data.refreshToken);
+        console.log("123");
+      })
+      .catch(() => {
+        setPassword("");
+        setIsError(true);
+      });
+  };
+
+  const handleEnterSignup = () => {
+    signup({
+      name: name,
+      accountId: id,
+      password: password,
+    })
+      .then((res) => {
+        console.log("123");
       })
       .catch(() => {
         setPassword("");
@@ -40,7 +55,7 @@ export const SignUpPage = () => {
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handleEnterLogin();
+    if (e.key === "Enter") handleEnterSignup();
   };
 
   return (
@@ -75,7 +90,9 @@ export const SignUpPage = () => {
         <SignUp>
           이미 회원이라면?&nbsp;<a href="/">로그인 하기</a>
         </SignUp>
-        <Button isActive={isButtonActive}>가입하기</Button>
+        <Button isActive={isButtonActive} onClick={handleLogin}>
+          가입하기
+        </Button>
       </ButtonWrapper>
     </Container>
   );
