@@ -1,4 +1,3 @@
-
 /*users*/
 export type LoginType = {
   accountId: string;
