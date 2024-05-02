@@ -4,9 +4,26 @@ import { Tag } from "../Main/Tag";
 import BookMarkIcon from "../../Assets/img/SVG/BookMark.svg";
 import BookMarkColorIcon from "../../Assets/img/SVG/BookMarkColor.svg";
 import { useState } from "react";
+import { CultureDetail } from "../../Apis/cultures";
+import { useEffect } from "react";
+import { CultureDetailType } from "../../types/type";
 
 export const DetailBox = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [cultureDetail, setCultureDetail] = useState<CultureDetailType | null>(null);
+
+  useEffect(() => {
+    const fetchCultureDetail = async () => {
+      try {
+        const response = await CultureDetail(cultureId);
+        setCultureDetail(response.data);
+      } catch (error) {
+        console.error("문화 생활 상세보기 에러: ", error);
+      }
+    };
+
+    fetchCultureDetail();
+  }, []);
 
   const toggleBookmark = () => {
     setIsBookmarked((prevState) => !prevState);
@@ -15,7 +32,7 @@ export const DetailBox = () => {
   return (
     <DetailContainer>
       <TitleWrapper>
-        <Title>서울 시립 미술관</Title>
+        <Title>{cultureDetail?.placeName}</Title>
         <BookMark
           src={isBookmarked ? BookMarkColorIcon : BookMarkIcon}
           onClick={toggleBookmark}
@@ -27,19 +44,20 @@ export const DetailBox = () => {
       <InputContainer>
         <InputBox>
           <InputTitle>전화번호</InputTitle>
-          <Input>041-1234-5678</Input>
+          <Input>{cultureDetail?.phoneNumber}</Input>
         </InputBox>
         <InputBox>
           <InputTitle>이용시간</InputTitle>
-          <Input>8:00~14:00</Input>
+          {/* 나중에 코드 수정 */}
+          <Input>{cultureDetail?.serviceStartDate}~{cultureDetail?.serviceEndDate}</Input>
         </InputBox>
         <InputBox>
           <InputTitle>접수 일정</InputTitle>
-          <Input>041-1234-5678</Input>
+          <Input>{cultureDetail?.applicationStartDate}~{cultureDetail?.applicationEndDate}</Input>
         </InputBox>
         <InputBox>
           <InputTitle>운영 일정</InputTitle>
-          <Input>041-1234-5678</Input>
+          <Input>{cultureDetail?.serviceStartDate}~{cultureDetail?.serviceEndDate}</Input>
         </InputBox>
       </InputContainer>
       <UsageMapContainer>
@@ -48,7 +66,7 @@ export const DetailBox = () => {
           <Button
             style={{ color: "white", fontSize: "16px" }}
           >
-            무료
+            {cultureDetail?.ticketPrice}
           </Button>
         </UserFeeWrapper>
         <MapBox />
@@ -58,17 +76,12 @@ export const DetailBox = () => {
           더 자세한 정보는 홈페이지 링크를 확인하세요!
         </div>
         <LinkWrap>
-          https://github.com/wanteddev/wanted-sans/releases/tag/v1.0.3
+          {cultureDetail?.cultureLink}
         </LinkWrap>
       </LinkWrapper>
     </DetailContainer>
   );
 };
-
-
-const TagWrap = styled.div`
-
-`;
 
 const DetailContainer = styled.div`
   display: flex;
