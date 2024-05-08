@@ -15,3 +15,7 @@ export const ReviewWrite = (reviewId: string) => {
         }
     )
 }
+
+export const MyReview = async () => {
+    return await instance.get('/reviews');
+}

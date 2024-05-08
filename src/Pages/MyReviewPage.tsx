@@ -1,8 +1,35 @@
 import { Header } from "../Components/Common/Header"
 import styled from "styled-components";
 import { MyReviewBox } from "../Components/MyPage/MyReview";
+import { useEffect, useState } from "react";
+import { MyReview } from "../Apis/reviews";
+
+
+interface Review {
+    id: string;
+    writer: string;
+    content: string;
+    createdAt: string;
+    imageUrls: string[];
+    placeName: string;
+}
 
 export const MyReviewPage = () => {
+    const [reviews, setReviews] = useState<Review[]>([]);
+
+    useEffect(() => {
+        const fetchReviews = async () => {
+            try {
+                const response = await MyReview();
+                setReviews(response.data.reviewList);
+            } catch (error) {
+                console.error("Error fetching reviews:", error);
+            }
+        };
+
+        fetchReviews();
+    }, []);
+
     return (
         <>
             <Header />
@@ -11,9 +38,9 @@ export const MyReviewPage = () => {
                     <p>내가 작성한 리뷰</p>
                     <Line></Line>
                 </ReviewHeader>
-                <MyReviewBox />
-                <MyReviewBox />
-                <MyReviewBox />
+                {reviews.map(review => (
+                    <MyReviewBox key={review.id} review={review} />
+                ))}
             </Wrapper>
         </>
     )
