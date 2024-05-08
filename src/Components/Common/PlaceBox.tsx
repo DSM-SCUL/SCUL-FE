@@ -1,47 +1,67 @@
 import styled from "styled-components";
 import BookMarkIcon from "../../Assets/img/SVG/BookMark.svg";
 import BookMarkColorIcon from "../../Assets/img/SVG/BookMarkColor.svg";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { CultureListType, ListProps } from "../../types/type";
+import { bookmark } from "../../Apis/bookmarks";
 
-export const PlaceBox = () => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
-  const toggleBookmark = () => {
-    setIsBookmarked((prevState) => !prevState);
+export const PlaceBox = ({ lists }: ListProps) => {
+  const toggleBookmark = (id: string) => {
+    bookmark(id)
+      .then((res) => {
+        console.log(res.data);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
-    <>
-      <Container>
-        <Picture />
-        <PlaceInfoWrapper>
-          <PlaceInfo>
-            <Link to={'/detail'}>
-              <Name>서울 시립 미술관</Name>
-            </Link>
-            <Address>서울특별시 가정북로 76 우정관</Address>
-            <ReservePriceWrapper>
-              <ReservePrice>
-                예약 <p>가능</p>
-              </ReservePrice>
-              <ReservePrice>
-                이용료 <p>무료</p>
-              </ReservePrice>
-            </ReservePriceWrapper>
-            <TagWrapper>
-              <Tag>장애인</Tag>
-              <Tag>유아</Tag>
-            </TagWrapper>
-          </PlaceInfo>
-          <BookMark
-            src={isBookmarked ? BookMarkColorIcon : BookMarkIcon}
-            onClick={toggleBookmark}
-          />
-        </PlaceInfoWrapper>
-      </Container>
-    </>
+    <Asdf>
+      {lists.map((list: CultureListType, index: number) => (
+        <Container key={index}>
+          <Picture src={list.imageUrl} />
+          <PlaceInfoWrapper>
+            <PlaceInfo>
+              <Link to={`/cultures/detail/${list.id}`}>
+                <Name>{list.cultureName}</Name>
+              </Link>
+              <Address>
+                {list.location}&nbsp;
+                {list.placeName}
+              </Address>
+              <ReservePriceWrapper>
+                <ReservePrice>
+                  예약 <p>{list.isApplicationAble ? "가능" : "불가능"}</p>
+                </ReservePrice>
+                <ReservePrice>
+                  이용료 <p>{list.ticketPrice}</p>
+                </ReservePrice>
+              </ReservePriceWrapper>
+              <TagWrapper>
+                <Tag>{list.wantedPeople}</Tag>
+              </TagWrapper>
+            </PlaceInfo>
+            <BookMark
+              src={list.isBookMarked ? BookMarkColorIcon : BookMarkIcon}
+              onClick={() => toggleBookmark(list.id)}
+            />
+          </PlaceInfoWrapper>
+        </Container>
+      ))}
+    </Asdf>
   );
 };
+
+const Asdf = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 960px;
+  width: 100%;
+  margin: 20px auto;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -49,7 +69,7 @@ const Container = styled.div`
   gap: 8px;
   border-radius: 8px;
   width: 302px;
-  height: 247px;
+  height: 100%;
   padding: 12px 20px;
   border: solid 1px #f3f3f3;
 `;
@@ -112,7 +132,8 @@ const Tag = styled.div`
   border-radius: 20px;
   color: ${({ theme }) => theme.colors.white};
   padding: 6px 10px;
-  ${({ children, theme }) => {
+  background-color: ${({ theme }) => theme.colors.main300};
+  /* ${({ children, theme }) => {
     switch (children) {
       case "장애인":
         return `background-color: ${theme.colors.main500};`;
@@ -123,5 +144,5 @@ const Tag = styled.div`
       default:
         return null;
     }
-  }}
+  }} */
 `;
