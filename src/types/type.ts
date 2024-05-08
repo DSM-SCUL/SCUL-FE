@@ -9,3 +9,9 @@ export type SignupType = {
   accountId: string;
   password: string;
 };
+
+/*reviews*/
+export type ReviewWriteType = {
+  content: string;
+  imageUrls: string[];
+}
