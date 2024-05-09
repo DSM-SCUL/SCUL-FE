@@ -43,6 +43,11 @@ export type CultureDetailType = {
 }
 
 export type CultureListType = {
+  id: string;
+  location: string;
+  placeName: string;
+  ticketPrice: string;
+  isBookMarked: boolean;
   imageUrl: string;
   cultureName: string;
   wantedPeople: string;
