@@ -3,18 +3,33 @@ import { Header } from "../Components/Common/Header";
 import { PictureBox } from "../Components/ReviewWrite/PictureBox";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { ReviewWrite } from "../Apis/reviews";
+import { createImgUrls } from "../Apis/cultures";
 
 export const ReviewWritePage = () => {
     const [pictureAdded, setPictureAdded] = useState(false);
     const [reviewContent, setReviewContent] = useState("");
+    const reviewWriteMutation = ReviewWrite('reviewId');
 
     const handlePictureAdded = () => {
         setPictureAdded(true);
-    }
+    };
 
-    const handleContentChange = (e: any) => {
+    const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setReviewContent(e.target.value);
-    }
+    };
+
+    const handleSubmit = async () => {
+        if (!pictureAdded || reviewContent === "" ) return;
+
+        const imageFiles: File[] = []
+        const imageUrls = await Promise.all(imageFiles.map(file => createImgUrls(file)));
+
+        reviewWriteMutation.mutate({
+            content: reviewContent,
+            imageUrls: imageUrls.flat()
+        });
+    };
 
     return (
         <>
@@ -42,6 +57,7 @@ export const ReviewWritePage = () => {
                     <SubmitButton
                         pictureAdded={pictureAdded && reviewContent !== ""}
                         disabled={!pictureAdded || reviewContent === ""}
+                        onClick={handleSubmit}
                     >리뷰 등록하기
                     </SubmitButton>
                 </Link>

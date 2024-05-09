@@ -1,4 +1,3 @@
-
 /*users*/
 export type LoginType = {
   accountId: string;
@@ -12,7 +11,19 @@ export type SignupType = {
 };
 
 /*cultures*/
+export type NameType = {
+  name: string;
+};
+
+/*reviews*/
+export type ReviewWriteType = {
+  content: string;
+  imageUrls: string[];
+}
+
+/*cultures*/
 export type CultureDetailType = {
+  id: string;
   location: string;
   placeName: string;
   ticketPrice: string;
@@ -30,3 +41,14 @@ export type CultureDetailType = {
   xCoordinate: string;
   yCoordinate: string;
 }
+
+export type CultureListType = {
+  imageUrl: string;
+  cultureName: string;
+  wantedPeople: string;
+  isApplicationAble: boolean;
+};
+
+export type ListProps = {
+  lists: CultureListType[];
+};

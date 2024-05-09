@@ -1,10 +1,24 @@
 import styled from "styled-components";
 import { Tag } from "./Tag";
+import { useEffect, useState } from "react";
+import { getMyName } from "../../Apis/users";
+import { NameType } from "../../types/type";
 
 export const MiddleContainer = () => {
+  const [name, setName] = useState<NameType | undefined>();
+  useEffect(() => {
+    getMyName()
+      .then((res) => {
+        console.log(res.data);
+        setName(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <Container>
-      <Text>✨강해민님에게 추천하는 문화생활이에요</Text>
+      <Text>✨{`${name?.name}`}님에게 추천하는 문화생활이에요</Text>
       <Tag />
     </Container>
   );
