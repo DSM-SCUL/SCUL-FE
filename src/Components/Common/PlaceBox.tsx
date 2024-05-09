@@ -16,6 +16,7 @@ export const PlaceBox = ({ lists }: ListProps) => {
         console.log(err);
       });
   };
+
   return (
     <Asdf>
       {lists.map((list: CultureListType, index: number) => (

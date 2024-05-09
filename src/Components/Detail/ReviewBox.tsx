@@ -1,24 +1,51 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components"
+import { Reviews } from "../../Apis/reviews";
 
-export const ReviewBox = () => {
+interface Review {
+    id: string;
+    writer: string;
+    content: string;
+    createdAt: string;
+    imageUrls: string[];
+}
+
+interface ReviewBoxProps {
+   cultureId: string;
+}
+
+export const ReviewBox = ({cultureId}: ReviewBoxProps) => {
+    const [reviews, setReviews] = useState<Review[]>([]);
+
+    useEffect(() => {
+        const fetchReviews = async () => {
+            try {
+                const response = await Reviews(cultureId);
+                setReviews(response.data.reviewList);
+            } catch (error) {
+                console.error("리뷰 가져오기 실패: ", error);
+            }
+        };
+        fetchReviews();
+    }, [cultureId]);
+
     return (
-        <ReviewContainer>
-            <UserInfoWrapper>
-                <UserInfo>강*민</UserInfo>
-                <UserInfo>2024. 04. 15</UserInfo>
-            </UserInfoWrapper>
-            <p>
-                아니 여기 자주 가는데 너무 좋아ㅛㅜㅜ 전 진짜 여기 맨날 가고 싶어요 
-                진짜 사랑해요 살ㅇ해요 아이 러브 쏘 부산 구다상;
-                사랑해요 사랑해요 아이 러브 쏘 김치 구다사이 고구마 구다사ㅣ
-            </p>
-            <ReviewPictureWrapper>
-                <ReviewPicture></ReviewPicture>
-                <ReviewPicture></ReviewPicture>
-                <ReviewPicture></ReviewPicture>
-                <ReviewPicture></ReviewPicture>
-            </ReviewPictureWrapper>
-        </ReviewContainer>
+        <>
+            {reviews.map((review, index) => (
+                <ReviewContainer key={index}>
+                    <UserInfoWrapper>
+                        <UserInfo>{review.writer}</UserInfo>
+                        <UserInfo>{review.createdAt}</UserInfo>
+                    </UserInfoWrapper>
+                    <p>{review.content}</p>
+                    <ReviewPictureWrapper>
+                        {review.imageUrls.map((imageUrl, idx) => (
+                            <ReviewPicture key={idx} src={imageUrl}/>
+                        ))}
+                    </ReviewPictureWrapper>
+                </ReviewContainer>
+            ))}
+        </>
     )
 }
 

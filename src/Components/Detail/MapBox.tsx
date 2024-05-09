@@ -1,12 +1,32 @@
 import styled from "styled-components";
 import { MapComponent } from "./Map";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { CultureDetailType } from "../../types/type";
+import { CultureDetail } from "../../Apis/cultures";
 
 export const MapBox = () => {
+    const [cultureDetail, setCultureDetail] = useState<CultureDetailType | null>(null);
+    const {id} = useParams<{id: string}>();
+
+    useEffect(() => {
+        const fetchCultureDetail = async () => {
+        try {
+            const response = await CultureDetail(String(id));
+            setCultureDetail(response.data);
+        } catch (error) {
+            console.error("문화 생활 상세보기 에러: ", error);
+        }
+        };
+
+        fetchCultureDetail();
+    }, [id]);
+
     return (
         <MapContainer>
             <MapWrapper>
                 <div style={{fontSize: '16px', fontWeight: '500'}}>위치보기</div>
-                <div style={{fontSize: '16px', fontWeight: '500'}}>서울특별시 가정북로 76 우정관</div>
+                <div style={{fontSize: '16px', fontWeight: '500'}}>{cultureDetail?.location}, {cultureDetail?.placeName}</div>
             </MapWrapper>
             <MapComponent />
         </MapContainer>

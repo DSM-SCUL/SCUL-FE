@@ -1,7 +1,7 @@
 import { CultureDetailType } from "../types/type";
 import { instance } from "./axios";
 
-export const CultureDetail = async (cultureId: number) => {
+export const CultureDetail = async (cultureId: string) => {
     return await instance.get<CultureDetailType>(`/cultures/detail/${cultureId}`)
 } 
 

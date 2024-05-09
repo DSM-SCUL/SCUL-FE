@@ -1,21 +1,23 @@
 import styled from "styled-components";
 import { MapBox } from "./MapBox";
-import { Tag } from "../Main/Tag";
 import BookMarkIcon from "../../Assets/img/SVG/BookMark.svg";
 import BookMarkColorIcon from "../../Assets/img/SVG/BookMarkColor.svg";
 import { useState } from "react";
 import { CultureDetail } from "../../Apis/cultures";
 import { useEffect } from "react";
 import { CultureDetailType } from "../../types/type";
+import { useParams } from "react-router-dom";
+import { bookmark } from "../../Apis/bookmarks";
 
 export const DetailBox = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [cultureDetail, setCultureDetail] = useState<CultureDetailType | null>(null);
+  const {id} = useParams<{id: string}>();
 
   useEffect(() => {
     const fetchCultureDetail = async () => {
       try {
-        const response = await CultureDetail(cultureId);
+        const response = await CultureDetail(String(id));
         setCultureDetail(response.data);
       } catch (error) {
         console.error("문화 생활 상세보기 에러: ", error);
@@ -23,23 +25,32 @@ export const DetailBox = () => {
     };
 
     fetchCultureDetail();
-  }, []);
+  }, [id]);
 
-  const toggleBookmark = () => {
-    setIsBookmarked((prevState) => !prevState);
+  const toggleBookmark = (id: string | undefined) => {
+    if (id) {
+      bookmark(id)
+      .then((res) => {
+        console.log(res.data);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
   };
 
   return (
     <DetailContainer>
       <TitleWrapper>
-        <Title>{cultureDetail?.placeName}</Title>
+        <Title>{cultureDetail?.cultureName}</Title>
         <BookMark
-          src={isBookmarked ? BookMarkColorIcon : BookMarkIcon}
-          onClick={toggleBookmark}
+            src={cultureDetail?.isBookMarked ? BookMarkColorIcon : BookMarkIcon}
+            onClick={() => toggleBookmark(cultureDetail?.id)}
         />
       </TitleWrapper>
       <div>
-        <Tag />
+        <div>{cultureDetail?.wantedPeople}</div>
       </div>
       <InputContainer>
         <InputBox>
@@ -48,8 +59,7 @@ export const DetailBox = () => {
         </InputBox>
         <InputBox>
           <InputTitle>이용시간</InputTitle>
-          {/* 나중에 코드 수정 */}
-          <Input>{cultureDetail?.serviceStartDate}~{cultureDetail?.serviceEndDate}</Input>
+          <Input>{cultureDetail?.serviceStartTime}~{cultureDetail?.serviceEndTime}</Input>
         </InputBox>
         <InputBox>
           <InputTitle>접수 일정</InputTitle>
@@ -75,7 +85,7 @@ export const DetailBox = () => {
         <div style={{ fontSize: "14px", fontWeight: "500" }}>
           더 자세한 정보는 홈페이지 링크를 확인하세요!
         </div>
-        <LinkWrap>
+        <LinkWrap href={cultureDetail?.cultureLink}>
           {cultureDetail?.cultureLink}
         </LinkWrap>
       </LinkWrapper>
@@ -165,7 +175,7 @@ const LinkWrapper = styled.div`
   gap: 8px;
 `;
 
-const LinkWrap = styled.div`
+const LinkWrap = styled.a`
   font-size: 12px;
   color: ${({ theme }) => theme.colors.main600};
   font-weight: 500;

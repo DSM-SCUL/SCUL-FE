@@ -28,18 +28,21 @@ export type CultureDetailType = {
   placeName: string;
   ticketPrice: string;
   isBookMarked: boolean;
-  imageurl: string;
+  imageUrl: string;
   cultureName: string;
   wantedPeople: string;
   content: string;
   phoneNumber: string;
+  isApplicationAble: boolean;
   applicationStartDate: string;
   applicationEndDate: string;
   serviceStartDate: string;
   serviceEndDate: string;
+  serviceStartTime: string;
+  serviceEndTime: string;
   cultureLink: string;
-  xCoordinate: string;
-  yCoordinate: string;
+  xcoordinate: number;
+  ycoordinate: number;
 }
 
 export type CultureListType = {

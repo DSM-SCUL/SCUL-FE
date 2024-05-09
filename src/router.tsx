@@ -17,7 +17,7 @@ const Router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: "/detail",
+        path: "/cultures/detail/:id",
         element: <DetailPage />,
       },
       {
