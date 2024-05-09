@@ -4,53 +4,71 @@ import BookMarkColorIcon from "../../Assets/img/SVG/BookMarkColor.svg";
 import { Link } from "react-router-dom";
 import { CultureListType, ListProps } from "../../types/type";
 import { bookmark } from "../../Apis/bookmarks";
+import { useEffect, useState } from "react";
+import { MyBookMark } from "../../Apis/bookmarks";
 
-export const PlaceBox = ({ lists }: ListProps) => {
-  const toggleBookmark = (id: string) => {
-    bookmark(id)
-      .then((res) => {
-        console.log(res.data);
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  return (
-    <Asdf>
-      {lists.map((list: CultureListType, index: number) => (
-        <Container key={index}>
-          <Picture src={list.imageUrl} />
-          <PlaceInfoWrapper>
-            <PlaceInfo>
-              <Link to={`/cultures/detail/${list.id}`}>
-                <Name>{list.cultureName}</Name>
-              </Link>
-              <Address>
-                {list.location}&nbsp;
-                {list.placeName}
-              </Address>
-              <ReservePriceWrapper>
-                <ReservePrice>
-                  예약 <p>{list.isApplicationAble ? "가능" : "불가능"}</p>
-                </ReservePrice>
-                <ReservePrice>
-                  이용료 <p>{list.ticketPrice}</p>
-                </ReservePrice>
-              </ReservePriceWrapper>
-              <TagWrapper>
-                <Tag>{list.wantedPeople}</Tag>
-              </TagWrapper>
-            </PlaceInfo>
-            <BookMark
-              src={list.isBookMarked ? BookMarkColorIcon : BookMarkIcon}
-              onClick={() => toggleBookmark(list.id)}
-            />
-          </PlaceInfoWrapper>
-        </Container>
-      ))}
-    </Asdf>
-  );
+export const MyBookMarkBox = ({ lists }: ListProps) => {
+    const [, setBookmarkedList] = useState([]);
+
+    useEffect(() => {
+        fetchBookmarks();
+    }, [])
+
+    const fetchBookmarks = async () => {
+        try {
+            const response = await MyBookMark();
+            setBookmarkedList(response.data.culture);
+        } catch (error) {
+            console.error("북마크 불러오는 중 에러: ", error);
+            
+        }
+    }
+    const toggleBookmark = (id: string) => {
+        bookmark(id)
+        .then((res) => {
+            console.log(res.data);
+            fetchBookmarks();
+            window.location.reload();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    };
+    return (
+        <Asdf>
+        {lists.map((list: CultureListType, index: number) => (
+            <Container key={index}>
+            <Picture src={list.imageUrl} />
+            <PlaceInfoWrapper>
+                <PlaceInfo>
+                <Link to={`/cultures/detail/${list.id}`}>
+                    <Name>{list.cultureName}</Name>
+                </Link>
+                <Address>
+                    {list.location}&nbsp;
+                    {list.placeName}
+                </Address>
+                <ReservePriceWrapper>
+                    <ReservePrice>
+                    예약 <p>{list.isApplicationAble ? "가능" : "불가능"}</p>
+                    </ReservePrice>
+                    <ReservePrice>
+                    이용료 <p>{list.ticketPrice}</p>
+                    </ReservePrice>
+                </ReservePriceWrapper>
+                <TagWrapper>
+                    <Tag>{list.wantedPeople}</Tag>
+                </TagWrapper>
+                </PlaceInfo>
+                <BookMark
+                src={list.isBookMarked ? BookMarkColorIcon : BookMarkIcon}
+                onClick={() => toggleBookmark(list.id)}
+                />
+            </PlaceInfoWrapper>
+            </Container>
+        ))}
+        </Asdf>
+    );
 };
 
 const Asdf = styled.div`

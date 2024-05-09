@@ -4,22 +4,31 @@ import { Header } from "../Components/Common/Header";
 import { MiddleContainer } from "../Components/Main/MiddleContainer";
 import BannerImg from "../Assets/img/PNG/Banner.png";
 import Arrow from "../Assets/img/SVG/Arrow.svg";
+import { useEffect, useState } from "react";
+import { CultureListType } from "../types/type";
+import { getCultureList } from "../Apis/cultures";
 
 export const MainPage = () => {
+  const [list, setList] = useState<CultureListType[]>();
+
+  useEffect(() => {
+    getCultureList()
+      .then((res) => {
+        console.log(res.data);
+        setList(res.data.culture);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <Container>
       <Header />
       <Wrapper>
         <Banner src={BannerImg} />
         <MiddleContainer />
-        <PlaceWrapper>
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-          <PlaceBox />
-        </PlaceWrapper>
+        {list && <PlaceBox lists={list} />}
         <ArrowIcon src={Arrow} />
       </Wrapper>
     </Container>
@@ -39,16 +48,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 92px;
-`;
-
-const PlaceWrapper = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  max-width: 960px;
-  width: 100%;
-  margin: 20px auto;
 `;
 
 const ArrowIcon = styled.img`

@@ -5,25 +5,18 @@ import { PlaceBox } from "../Components/Common/PlaceBox";
 import Arrow from "../Assets/img/SVG/Arrow.svg";
 import NoResult from "../Assets/img/SVG/NoResult.svg";
 import { useState } from "react";
+import { CultureListType } from "../types/type";
 
 export const SearchPage = () => {
   const [searchResultExists, setSearchResultExists] = useState(true);
+  const [list, setList] = useState<CultureListType[]>();
   return (
     <Container>
       <Header />
       {searchResultExists ? (
         <Wrapper>
           <Tag />
-          <PlaceWrapper>
-            <PlaceBox />
-            <PlaceBox />
-            <PlaceBox />
-            <PlaceBox />
-            <PlaceBox />
-            <PlaceBox />
-            <PlaceBox />
-            <PlaceBox />
-          </PlaceWrapper>
+          <PlaceWrapper>{list && <PlaceBox lists={list} />}</PlaceWrapper>
           <ArrowIcon src={Arrow} />
         </Wrapper>
       ) : (

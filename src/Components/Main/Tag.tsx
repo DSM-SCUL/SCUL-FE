@@ -13,7 +13,6 @@ export const Tag = () => {
 const Container = styled.div`
   display: flex;
   gap: 20px;
-  align-self: flex-end;
 `;
 
 const Tag1 = styled.button`

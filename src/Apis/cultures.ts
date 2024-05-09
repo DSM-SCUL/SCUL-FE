@@ -12,3 +12,7 @@ export const createImgUrls = (file: File): Promise<string[]> => {
             return [];
         });
 };
+
+export const getCultureList = async () => {
+  return await instance.get("/cultures");
+};
