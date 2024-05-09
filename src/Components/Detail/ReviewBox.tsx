@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components"
 import { Reviews } from "../../Apis/reviews";
+import { Link } from "react-router-dom";
 
 interface Review {
     id: string;
@@ -31,20 +32,29 @@ export const ReviewBox = ({cultureId}: ReviewBoxProps) => {
 
     return (
         <>
-            {reviews.map((review, index) => (
-                <ReviewContainer key={index}>
-                    <UserInfoWrapper>
-                        <UserInfo>{review.writer}</UserInfo>
-                        <UserInfo>{review.createdAt}</UserInfo>
-                    </UserInfoWrapper>
-                    <p>{review.content}</p>
-                    <ReviewPictureWrapper>
-                        {review.imageUrls.map((imageUrl, idx) => (
-                            <ReviewPicture key={idx} src={imageUrl}/>
-                        ))}
-                    </ReviewPictureWrapper>
-                </ReviewContainer>
-            ))}
+            {reviews.length === 0 ? (
+                <NoReviewContainer>
+                    <p>리뷰가 없습니다</p>
+                    <Link to={'/write'}>
+                        <ReviewWriteButton>리뷰 작성하기</ReviewWriteButton>
+                    </Link>
+                </NoReviewContainer>
+            ) : (
+                reviews.map((review, index) => (
+                    <ReviewContainer key={index}>
+                        <UserInfoWrapper>
+                            <UserInfo>{review.writer}</UserInfo>
+                            <UserInfo>{review.createdAt}</UserInfo>
+                        </UserInfoWrapper>
+                        <p>{review.content}</p>
+                        <ReviewPictureWrapper>
+                            {review.imageUrls.map((imageUrl, idx) => (
+                                <ReviewPicture key={idx} src={imageUrl} />
+                            ))}
+                        </ReviewPictureWrapper>
+                    </ReviewContainer>
+                ))
+            )}
         </>
     )
 }
@@ -82,4 +92,33 @@ const ReviewPicture = styled.img`
     width: 100px;
     height: 100px;
     border-radius: 4px;
+`;
+
+const NoReviewContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 76px;
+    gap: 24px;
+    align-items: center;
+    > p {
+        font-weight: 600;
+        font-size: 24px;
+        color: ${({theme}) => theme.colors.gray900};
+    }
+`;
+
+const ReviewWriteButton = styled.button`
+    width: 200px;
+    height: 44px;
+    border-radius: 8px;
+    margin-bottom: 71px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({theme}) => theme.colors.main400};
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
 `;

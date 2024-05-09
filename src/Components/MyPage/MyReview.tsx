@@ -18,7 +18,7 @@ export const MyReviewBox = ({ review }: MyReviewBoxProps) => {
 
     return (
         <ReviewContainer>
-            <PlaceName>{placeName}</PlaceName>
+            <PlaceName>{placeName}에서</PlaceName>
             <UserInfoWrapper>
                 <UserInfo>{writer}</UserInfo>
                 <UserInfo>{createdAt}</UserInfo>
