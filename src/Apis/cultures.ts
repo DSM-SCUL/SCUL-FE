@@ -1,4 +1,9 @@
-import { instance } from "./axios"
+import { CultureDetailType } from "../types/type";
+import { instance } from "./axios";
+
+export const CultureDetail = async (cultureId: number) => {
+    return await instance.get<CultureDetailType>(`/cultures/detail/${cultureId}`)
+} 
 
 export const createImgUrls = (file: File): Promise<string[]> => {
     const formData = new FormData();
