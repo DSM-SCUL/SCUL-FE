@@ -1,28 +1,38 @@
 import styled from "styled-components"
 
+interface Review {
+    id: string;
+    writer: string;
+    content: string;
+    createdAt: string;
+    imageUrls: string[];
+    placeName: string;
+}
 
-export const MyReviewBox = () => {
+interface MyReviewBoxProps {
+    review: Review;
+}
+
+export const MyReviewBox = ({ review }: MyReviewBoxProps) => {
+    const { writer, content, createdAt, imageUrls, placeName } = review;
+
     return (
         <ReviewContainer>
-            <PlaceName>서울 시립 미술관에서</PlaceName>
+            <PlaceName>{placeName}</PlaceName>
             <UserInfoWrapper>
-                <UserInfo>강*민</UserInfo>
-                <UserInfo>2024. 04. 15</UserInfo>
+                <UserInfo>{writer}</UserInfo>
+                <UserInfo>{createdAt}</UserInfo>
             </UserInfoWrapper>
-            <p>
-                아니 여기 자주 가는데 너무 좋아ㅛㅜㅜ 전 진짜 여기 맨날 가고 싶어요 
-                진짜 사랑해요 살ㅇ해요 아이 러브 쏘 부산 구다상;
-                사랑해요 사랑해요 아이 러브 쏘 김치 구다사이 고구마 구다사ㅣ
-            </p>
+            <p>{content}</p>
             <ReviewPictureWrapper>
-                <ReviewPicture></ReviewPicture>
-                <ReviewPicture></ReviewPicture>
-                <ReviewPicture></ReviewPicture>
-                <ReviewPicture></ReviewPicture>
+                {imageUrls.map((url, index) => (
+                    <ReviewPicture key={index} src={url} alt={`Review ${index}`} />
+                ))}
             </ReviewPictureWrapper>
         </ReviewContainer>
-    )
-}
+    );
+};
+
 
 
 const ReviewContainer = styled.div`

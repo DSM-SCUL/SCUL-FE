@@ -14,6 +14,12 @@ export type NameType = {
   name: string;
 };
 
+/*reviews*/
+export type ReviewWriteType = {
+  content: string;
+  imageUrls: string[];
+}
+
 /*cultures*/
 export type CultureListType = {
   id: string;
