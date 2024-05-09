@@ -130,20 +130,12 @@ const TagWrapper = styled.div`
 `;
 
 const Tag = styled.div`
+  max-width: 250px;
   border-radius: 20px;
   color: ${({ theme }) => theme.colors.white};
   padding: 6px 10px;
-  background-color: ${({ theme }) => theme.colors.main300};
-  /* ${({ children, theme }) => {
-    switch (children) {
-      case "장애인":
-        return `background-color: ${theme.colors.main500};`;
-      case "유아":
-        return `background-color: ${theme.colors.main300};`;
-      case "노약자":
-        return `background-color: ${theme.colors.main400};`;
-      default:
-        return null;
-    }
-  }} */
+  background-color: ${({ theme }) => theme.colors.main400};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;

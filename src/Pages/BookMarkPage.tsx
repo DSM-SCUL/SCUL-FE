@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Header } from "../Components/Common/Header";
 import { MyBookMarkBox } from "../Components/MyPage/MyBookMark";
 import { useEffect, useState } from "react";
+import { PlaceBox } from "../Components/Common/PlaceBox";
 import { CultureListType } from "../types/type";
 import { MyBookMark } from "../Apis/bookmarks";
 
@@ -20,6 +21,11 @@ export const BookMarkPage = () => {
     }
     fetchBookmarks();
   }, [])
+
+
+  useEffect(() => {
+    setList([]);
+  }, []);
 
   return (
     <>

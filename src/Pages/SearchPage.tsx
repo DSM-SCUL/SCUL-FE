@@ -1,22 +1,52 @@
 import styled from "styled-components";
-import { Header } from "../Components/Common/Header";
+import { SearchHeader } from "../Components/Common/SearchHeader";
 import { Tag } from "../Components/Main/Tag";
 import { PlaceBox } from "../Components/Common/PlaceBox";
 import Arrow from "../Assets/img/SVG/Arrow.svg";
 import NoResult from "../Assets/img/SVG/NoResult.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CultureListType } from "../types/type";
+import { getSearch } from "../Apis/cultures";
 
 export const SearchPage = () => {
   const [searchResultExists, setSearchResultExists] = useState(true);
-  const [list, setList] = useState<CultureListType[]>();
+  const [list, setList] = useState<CultureListType[]>([]);
+
+  useEffect(() => {
+    setList([]);
+    setSearchResultExists(true);
+  }, []);
+
+  const handleSearch = (keyword: string) => {
+    if (keyword.trim() !== "") {
+      getSearch(keyword.trim())
+        .then((response: any) => {
+          setList(response.data.culture);
+          console.log(response.data.culture);
+          setSearchResultExists(true);
+        })
+        .catch((error) => {
+          console.error(error);
+          setList([]);
+          setSearchResultExists(false);
+        });
+    } else {
+      setList([]);
+      setSearchResultExists(false);
+    }
+  };
+
   return (
     <Container>
-      <Header />
+      <SearchHeader handleSearch={handleSearch} />
       {searchResultExists ? (
         <Wrapper>
           <Tag />
-          <PlaceWrapper>{list && <PlaceBox lists={list} />}</PlaceWrapper>
+          <PlaceWrapper>
+            {list.map((item, index) => (
+              <PlaceBox key={index} lists={[item]} />
+            ))}
+          </PlaceWrapper>
           <ArrowIcon src={Arrow} />
         </Wrapper>
       ) : (

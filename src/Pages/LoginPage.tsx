@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { Header } from "../Components/Common/Header";
 import { Id } from "../Components/Common/Id";
 import { Password } from "../Components/Common/Password";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { Cookie } from "../Utils/cookie";
 import { login } from "../Apis/users";
 import { useNavigate } from "react-router-dom";
+import { CultureListType } from "../types/type";
 
 export const LoginPage = () => {
   const [password, setPassword] = useState("");
@@ -13,6 +14,7 @@ export const LoginPage = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  const [list, setList] = useState<CultureListType[]>([]);
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "password") {
       setPassword(e.target.value);
@@ -49,6 +51,7 @@ export const LoginPage = () => {
       .then((res) => {
         Cookie.set("access_token", res.data.accessToken);
         Cookie.set("refresh_token", res.data.refreshToken);
+        window.location.href = "/";
       })
       .catch(() => {
         setPassword("");
@@ -59,6 +62,10 @@ export const LoginPage = () => {
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleEnterLogin();
   };
+
+  useEffect(() => {
+    setList([]);
+  }, []);
 
   return (
     <Container>

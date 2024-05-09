@@ -18,7 +18,12 @@ export const MiddleContainer = () => {
   }, []);
   return (
     <Container>
-      <Text>✨{`${name?.name}`}님에게 추천하는 문화생활이에요</Text>
+      <Text>
+        ✨
+        {name
+          ? `${name.name}님에게 추천하는 문화생활이에요`
+          : "로그인하고 사용해주세요!"}
+      </Text>
       <Tag />
     </Container>
   );

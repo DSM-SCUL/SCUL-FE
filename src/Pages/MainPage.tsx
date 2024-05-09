@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { PlaceBox } from "../Components/Common/PlaceBox";
-import { Header } from "../Components/Common/Header";
 import { MiddleContainer } from "../Components/Main/MiddleContainer";
 import BannerImg from "../Assets/img/PNG/Banner.png";
 import Arrow from "../Assets/img/SVG/Arrow.svg";
 import { useEffect, useState } from "react";
 import { CultureListType } from "../types/type";
-import { getCultureList } from "../Apis/cultures";
+import { getCultureList, getSearch } from "../Apis/cultures";
+import { Header } from "../Components/Common/Header";
 
 export const MainPage = () => {
   const [list, setList] = useState<CultureListType[]>();
@@ -20,6 +20,10 @@ export const MainPage = () => {
       .catch((err) => {
         console.log(err);
       });
+  }, []);
+
+  useEffect(() => {
+    setList([]);
   }, []);
 
   return (

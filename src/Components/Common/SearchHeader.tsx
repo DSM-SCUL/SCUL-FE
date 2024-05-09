@@ -7,11 +7,24 @@ import { MyPageModal } from "../MyPage/MyPageModal";
 import { Link } from "react-router-dom";
 import { Cookie } from "../../Utils/cookie";
 
-export const Header = () => {
+export const SearchHeader = ({
+  handleSearch,
+}: {
+  handleSearch: (keyword: string) => void;
+}) => {
   const [isMyPageModalVisible, setIsMyPageModalVisible] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
+
+  const ClickSearch = () => {
+    handleSearch(searchKeyword);
+  };
 
   const toggleMyPageModalVisibility = () => {
     setIsMyPageModalVisible((prevState) => !prevState);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
   };
 
   const isLoggedIn = !!Cookie.get("access_token");
@@ -22,11 +35,14 @@ export const Header = () => {
         <LogoImg src={Logo} />
       </Link>
       <SearchWrapper>
-        <Link to={"/Search"}>
-          <InputContainer>
-            <SearchIcon src={Search} />
-          </InputContainer>
-        </Link>
+        <InputContainer>
+          <Input
+            placeholder="문화 생활 검색"
+            value={searchKeyword}
+            onChange={handleInputChange}
+          />
+          <SearchIcon src={Search} onClick={ClickSearch} />
+        </InputContainer>
         {isLoggedIn ? (
           <MyPageIcon src={MyPage} onClick={toggleMyPageModalVisibility} />
         ) : (
@@ -71,6 +87,25 @@ const InputContainer = styled.div`
   position: relative;
   width: 300px;
   height: 40px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.gray50};
+  border-radius: 8px;
+  border: none;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.gray300};
+    font-size: 12px;
+    font-weight: 500;
+  }
+  input:focus {
+    outline: none;
+  }
 `;
 
 const SearchIcon = styled.img`

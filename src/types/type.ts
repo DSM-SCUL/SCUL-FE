@@ -60,3 +60,8 @@ export type CultureListType = {
 export type ListProps = {
   lists: CultureListType[];
 };
+
+export type TagProps = {
+  lists: CultureListType[];
+  setFilteredLists: React.Dispatch<React.SetStateAction<CultureListType[]>>;
+};

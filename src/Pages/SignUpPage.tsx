@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import { Header } from "../Components/Common/Header";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { Id } from "../Components/Common/Id";
 import { Password } from "../Components/Common/Password";
 import { signup } from "../Apis/users";
+import { CultureListType } from "../types/type";
 
 export const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [isError, setIsError] = useState<boolean>(true);
+  const [list, setList] = useState<CultureListType[]>([]);
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "password") {
       setPassword(e.target.value);
@@ -57,6 +59,10 @@ export const SignUpPage = () => {
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleEnterSignup();
   };
+
+  useEffect(() => {
+    setList([]);
+  }, []);
 
   return (
     <Container>

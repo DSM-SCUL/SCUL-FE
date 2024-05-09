@@ -21,3 +21,7 @@ export const createImgUrls = (file: File): Promise<string[]> => {
 export const getCultureList = async () => {
   return await instance.get("/cultures");
 };
+
+export const getSearch = async (keyword: string) => {
+  return await instance.get(`/cultures/search?keyword=${keyword}`);
+};
