@@ -11,65 +11,33 @@ export const ReviewWritePage = () => {
   const [pictureAdded, setPictureAdded] = useState(false);
   const [reviewContent, setReviewContent] = useState("");
   const [list, setList] = useState<CultureListType[]>([]);
-    const reviewWriteMutation = ReviewWrite('reviewId');
+  const reviewWriteMutation = ReviewWrite("reviewId");
+
+  useEffect(() => {
+    setList([]);
+  }, []);
 
   const handlePictureAdded = () => {
     setPictureAdded(true);
   };
 
-    const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setReviewContent(e.target.value);
-    };
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setReviewContent(e.target.value);
+  };
 
-    const handleSubmit = async () => {
-        if (!pictureAdded || reviewContent === "" ) return;
+  const handleSubmit = async () => {
+    if (!pictureAdded || reviewContent === "") return;
 
-        const imageFiles: File[] = []
-        const imageUrls = await Promise.all(imageFiles.map(file => createImgUrls(file)));
+    const imageFiles: File[] = [];
+    const imageUrls = await Promise.all(
+      imageFiles.map((file) => createImgUrls(file))
+    );
 
-        reviewWriteMutation.mutate({
-            content: reviewContent,
-            imageUrls: imageUrls.flat()
-        });
-    };
-
-    return (
-        <>
-            <Header />
-            <Wrapper>
-                <ReviewWriteWrapper>
-                    <p>리뷰 작성하기</p>
-                    <PlaceNameBox>
-                        <PlaceNameTitle>방문한 곳</PlaceNameTitle>
-                        <PlaceName>서울 시립 미술관</PlaceName>
-                    </PlaceNameBox>
-                    <ContentBox>
-                        <div>
-                            <p style={{fontSize: '16px', fontWeight: '500'}}>내용</p>
-                            <p style={{fontSize: '16px', fontWeight: '500', color:'#FF5271'}}>*</p>
-                        </div>
-                        <Content 
-                            placeholder="리뷰의 내용을 작성해주세요"
-                            onChange={handleContentChange}
-                        ></Content>
-                    </ContentBox>
-                    <PictureBox onPictureAdded={handlePictureAdded} />
-                </ReviewWriteWrapper>
-                <Link to={'/'}>
-                    <SubmitButton
-                        pictureAdded={pictureAdded && reviewContent !== ""}
-                        disabled={!pictureAdded || reviewContent === ""}
-                        onClick={handleSubmit}
-                    >리뷰 등록하기
-                    </SubmitButton>
-                </Link>
-            </Wrapper>
-        </>
-    )
-}
-  useEffect(() => {
-    setList([]);
-  }, []);
+    reviewWriteMutation.mutate({
+      content: reviewContent,
+      imageUrls: imageUrls.flat(),
+    });
+  };
 
   return (
     <>
@@ -105,6 +73,7 @@ export const ReviewWritePage = () => {
           <SubmitButton
             pictureAdded={pictureAdded && reviewContent !== ""}
             disabled={!pictureAdded || reviewContent === ""}
+            onClick={handleSubmit}
           >
             리뷰 등록하기
           </SubmitButton>

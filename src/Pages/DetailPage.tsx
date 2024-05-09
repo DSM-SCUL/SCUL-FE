@@ -8,78 +8,54 @@ import { CultureDetailType } from "../types/type";
 import { CultureListType } from "../types/type";
 import { Header } from "../Components/Common/Header";
 
+export const DetailPage = () => {
   const [list, setList] = useState<CultureListType[]>([]);
-export const DetailPage = () =>  {
-    const [cultureDetail, setCultureDetail] = useState<CultureDetailType | null>(null);
-    const {id} = useParams<{id: string}>();
-
-    useEffect(() => {
-        const fetchCultureDetail = async () => {
-        try {
-            const response = await CultureDetail(String(id));
-            setCultureDetail(response.data);
-        } catch (error) {
-            console.error("문화 생활 상세보기 에러: ", error);
-        }
-        };
-
-        fetchCultureDetail();
-    }, [id]);
-    
-    return (
-        <>
-            <Header />
-            <Wrapper>
-                {cultureDetail ? (
-                    <>
-                        <DetailWrapper>
-                            <Picture src={cultureDetail?.imageUrl}></Picture>
-                            <DetailBox />
-                        </DetailWrapper>
-                        <Border></Border>
-                        <ReviewHeaderWrapper>
-                            <div style={{fontSize: '24px', fontWeight: '600'}}>리뷰</div>
-                            <Link to={"/write"}>
-                                <Button>리뷰 작성</Button>
-                            </Link>
-                        </ReviewHeaderWrapper>
-                        <ReviewBoxWrapper>
-                            <ReviewBox cultureId={cultureDetail!.id}/>
-                        </ReviewBoxWrapper>
-                    </>
-                ) : (
-                    <div>로딩 중...</div>
-                )}
-            </Wrapper>
-        </>
-    )
-}
+  const [cultureDetail, setCultureDetail] = useState<CultureDetailType | null>(
+    null
+  );
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     setList([]);
   }, []);
 
+  useEffect(() => {
+    const fetchCultureDetail = async () => {
+      try {
+        const response = await CultureDetail(String(id));
+        setCultureDetail(response.data);
+      } catch (error) {
+        console.error("문화 생활 상세보기 에러: ", error);
+      }
+    };
+
+    fetchCultureDetail();
+  }, [id]);
+
   return (
     <>
       <Header />
       <Wrapper>
-        <DetailWrapper>
-          <Picture></Picture>
-          <DetailBox />
-        </DetailWrapper>
-        <Border></Border>
-        <ReviewHeaderWrapper>
-          <div style={{ fontSize: "24px", fontWeight: "600" }}>리뷰</div>
-          <Link to={"/write"}>
-            <Button>리뷰 작성</Button>
-          </Link>
-        </ReviewHeaderWrapper>
-        <ReviewBoxWrapper>
-          <ReviewBox />
-          <ReviewBox />
-          <ReviewBox />
-          <ReviewBox />
-        </ReviewBoxWrapper>
+        {cultureDetail ? (
+          <>
+            <DetailWrapper>
+              <Picture src={cultureDetail?.imageUrl}></Picture>
+              <DetailBox />
+            </DetailWrapper>
+            <Border></Border>
+            <ReviewHeaderWrapper>
+              <div style={{ fontSize: "24px", fontWeight: "600" }}>리뷰</div>
+              <Link to={"/write"}>
+                <Button>리뷰 작성</Button>
+              </Link>
+            </ReviewHeaderWrapper>
+            <ReviewBoxWrapper>
+              <ReviewBox cultureId={cultureDetail!.id} />
+            </ReviewBoxWrapper>
+          </>
+        ) : (
+          <div>로딩 중...</div>
+        )}
       </Wrapper>
     </>
   );
