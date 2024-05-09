@@ -5,11 +5,14 @@ import { Password } from "../Components/Common/Password";
 import { useState, ChangeEvent } from "react";
 import { Cookie } from "../Utils/cookie";
 import { login } from "../Apis/users";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [id, setId] = useState("");
   const [isError, setIsError] = useState<boolean>(false);
+  const navigate = useNavigate();
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "password") {
       setPassword(e.target.value);
@@ -30,6 +33,7 @@ export const LoginPage = () => {
       .then((res) => {
         Cookie.set("access_token", res.data.accessToken);
         Cookie.set("refresh_token", res.data.refreshToken);
+        navigate('/');
       })
       .catch(() => {
         setPassword("");
@@ -156,4 +160,5 @@ const Button = styled.button<{ isActive: boolean }>`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.white};
   border: none;
+  cursor: pointer;
 `;

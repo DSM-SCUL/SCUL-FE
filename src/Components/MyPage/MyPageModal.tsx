@@ -5,8 +5,12 @@ import Logout from "../../Assets/img/SVG/Logout.svg";
 import { Link } from "react-router-dom";
 import { LogoutModal } from "./LogoutModal";
 import { useState } from "react";
+import { useEffect } from "react";
+import { getMyName } from "../../Apis/users";
+import { NameType } from "../../types/type";
 
 export const MyPageModal = () => {
+    const [name, setName] = useState<NameType | undefined>();
     const [isLogout, setIsLogout] = useState(false);
 
     const handleLogout = () => {
@@ -17,11 +21,22 @@ export const MyPageModal = () => {
         setIsLogout(false);
     }
 
+    useEffect(() => {
+        getMyName()
+          .then((res) => {
+            console.log(res.data);
+            setName(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, []);
+
     return (
         <MyPageModalContainer>
             <ProfileWrap>
                 <p>즐거운 여가시간을 보내는</p>
-                <div>강해민님</div>
+                <div>{`${name?.name}`}님</div>
             </ProfileWrap>
             <p>보기</p>
             <ShowWrap>

@@ -1,16 +1,25 @@
 import { useState } from "react";
 import styled from "styled-components"
+import { Cookie } from "../../Utils/cookie";
+import { useNavigate } from "react-router-dom";
 
 interface LogoutModalProps {
     onClose: () => void
 }
 export const LogoutModal = ({onClose} : LogoutModalProps) => {
     const [isOpen, setIsOpen] = useState(true);
+    const navigate = useNavigate();
 
     const handleCloseModal = () => {
         setIsOpen(false);
         onClose();
     }
+    
+    const handleLogout = () => {
+        Cookie.remove("access_token");
+        navigate('/login');
+    }
+
     return (
         <>
             {isOpen && (
@@ -23,7 +32,7 @@ export const LogoutModal = ({onClose} : LogoutModalProps) => {
                         </LogoutHeader>
                         <ButtonWrap>
                             <CancelButton onClick={handleCloseModal}>취소</CancelButton>
-                            <CheckButton>확인</CheckButton>
+                            <CheckButton onClick={handleLogout}>확인</CheckButton>
                         </ButtonWrap>
                     </LogoutModalWrapper>
                 </LogoutModalContainer>
