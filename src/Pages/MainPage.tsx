@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { PlaceBox } from "../Components/Common/PlaceBox";
 import { MiddleContainer } from "../Components/Main/MiddleContainer";
 import BannerImg from "../Assets/img/PNG/Banner.png";
-import Arrow from "../Assets/img/SVG/Arrow.svg";
 import { useEffect, useState } from "react";
 import { CultureListType } from "../types/type";
 import { getCultureList, getSearch } from "../Apis/cultures";
 import { Header } from "../Components/Common/Header";
+import { Scroll } from "../Components/MyPage/Scroll";
 
 export const MainPage = () => {
   type a = "x" | "유아" | "장애인" | "노약자";
@@ -47,7 +47,7 @@ export const MainPage = () => {
             }
           />
         )}
-        <ArrowIcon src={Arrow} />
+        <Scroll />
       </Wrapper>
     </Container>
   );
@@ -66,13 +66,4 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 92px;
-`;
-
-const ArrowIcon = styled.img`
-  position: absolute;
-  right: 20%;
-  bottom: -15%;
-  align-items: end;
-  width: 70px;
-  height: 70px;
 `;
