@@ -5,16 +5,15 @@ export const CultureDetail = async (cultureId: string) => {
     return await instance.get<CultureDetailType>(`/cultures/detail/${cultureId}`)
 } 
 
-export const createImgUrls = (file: File): Promise<string[]> => {
+export const createImgUrls = async (file: any): Promise<string[]> => {
     const formData = new FormData();
     formData.append("image", file);
     
-    return instance
+    return await instance
         .post("/cultures/image", formData)
         .then((response) => response.data.imageUrls)
         .catch((error: any) => {
             console.error("이미지 URL 생성 에러: ", error.message);
-            return [];
         });
 };
 
@@ -23,5 +22,6 @@ export const getCultureList = async () => {
 };
 
 export const getSearch = async (keyword: string) => {
-  return await instance.get(`/cultures/search?keyword=${keyword}`);
-};
+    return await instance.get(`/cultures/search?keyword=${keyword}`);
+  };
+  

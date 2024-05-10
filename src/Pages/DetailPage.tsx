@@ -45,7 +45,7 @@ export const DetailPage = () => {
             <Border></Border>
             <ReviewHeaderWrapper>
               <div style={{ fontSize: "24px", fontWeight: "600" }}>리뷰</div>
-              <Link to={"/write"}>
+              <Link to={`/write/${id}`}>
                 <Button>리뷰 작성</Button>
               </Link>
             </ReviewHeaderWrapper>

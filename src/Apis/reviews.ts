@@ -2,10 +2,10 @@ import { ReviewWriteType } from "../types/type"
 import { instance } from "./axios"
 import { useMutation } from "react-query"
 
-export const ReviewWrite = (reviewId: string) => {
+export const ReviewWrite = (cultureId: string) => {
     return useMutation(
         async (reviewWriteData: ReviewWriteType) => {
-            const {data} = await instance.post(`/reviews/${reviewId}`, reviewWriteData);
+            const {data} = await instance.post(`/reviews/${cultureId}`, reviewWriteData);
             return data;
         },
         {

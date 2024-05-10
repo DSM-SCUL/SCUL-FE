@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components"
 import { Reviews } from "../../Apis/reviews";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface Review {
     id: string;
@@ -17,6 +17,7 @@ interface ReviewBoxProps {
 
 export const ReviewBox = ({cultureId}: ReviewBoxProps) => {
     const [reviews, setReviews] = useState<Review[]>([]);
+    const {id} = useParams<{id: string}>();
 
     useEffect(() => {
         const fetchReviews = async () => {
@@ -35,7 +36,7 @@ export const ReviewBox = ({cultureId}: ReviewBoxProps) => {
             {reviews.length === 0 ? (
                 <NoReviewContainer>
                     <p>리뷰가 없습니다</p>
-                    <Link to={'/write'}>
+                    <Link to={`/write/${id}`}>
                         <ReviewWriteButton>리뷰 작성하기</ReviewWriteButton>
                     </Link>
                 </NoReviewContainer>

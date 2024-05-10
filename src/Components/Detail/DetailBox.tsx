@@ -9,8 +9,9 @@ import { CultureDetailType } from "../../types/type";
 import { useParams } from "react-router-dom";
 import { bookmark } from "../../Apis/bookmarks";
 
+
+
 export const DetailBox = () => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [cultureDetail, setCultureDetail] = useState<CultureDetailType | null>(null);
   const {id} = useParams<{id: string}>();
 

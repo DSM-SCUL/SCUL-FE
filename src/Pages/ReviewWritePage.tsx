@@ -1,17 +1,20 @@
 import styled from "styled-components";
 import { Header } from "../Components/Common/Header";
 import { PictureBox } from "../Components/ReviewWrite/PictureBox";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CultureListType } from "../types/type";
 import { ReviewWrite } from "../Apis/reviews";
-import { createImgUrls } from "../Apis/cultures";
+import { CultureDetail, createImgUrls } from "../Apis/cultures";
+import { CultureDetailType } from "../types/type";
 
 export const ReviewWritePage = () => {
   const [pictureAdded, setPictureAdded] = useState(false);
   const [reviewContent, setReviewContent] = useState("");
-  const [list, setList] = useState<CultureListType[]>([]);
-  const reviewWriteMutation = ReviewWrite("reviewId");
+  const [, setList] = useState<CultureListType[]>([]);
+  const [cultureDetail, setCultureDetail] = useState<CultureDetailType | null>();
+  const {id} = useParams<{id: string}>();
+  const reviewWriteMutation = ReviewWrite(id || '');
 
   useEffect(() => {
     setList([]);
@@ -26,18 +29,36 @@ export const ReviewWritePage = () => {
   };
 
   const handleSubmit = async () => {
-    if (!pictureAdded || reviewContent === "") return;
-
     const imageFiles: File[] = [];
     const imageUrls = await Promise.all(
       imageFiles.map((file) => createImgUrls(file))
     );
 
+    console.log({
+      content: reviewContent,
+      imageUrls: imageUrls.flat(),
+      placeName: cultureDetail?.placeName
+    });
+    
     reviewWriteMutation.mutate({
       content: reviewContent,
       imageUrls: imageUrls.flat(),
+      placeName: cultureDetail?.placeName
     });
   };
+
+  useEffect(() => {
+    const fetchCultureDetail = async () => {
+      try {
+        const response = await CultureDetail(String(id));
+        setCultureDetail(response.data);
+      } catch (error) {
+        console.error("문화 생활 상세보기 에러: ", error);
+      }
+    };
+
+    fetchCultureDetail();
+  }, [id]);
 
   return (
     <>
@@ -47,7 +68,7 @@ export const ReviewWritePage = () => {
           <p>리뷰 작성하기</p>
           <PlaceNameBox>
             <PlaceNameTitle>방문한 곳</PlaceNameTitle>
-            <PlaceName>서울 시립 미술관</PlaceName>
+            <PlaceName>{cultureDetail?.placeName}</PlaceName>
           </PlaceNameBox>
           <ContentBox>
             <div>
@@ -69,10 +90,10 @@ export const ReviewWritePage = () => {
           </ContentBox>
           <PictureBox onPictureAdded={handlePictureAdded} />
         </ReviewWriteWrapper>
-        <Link to={"/"}>
+        <Link to={`/cultures/detail/${id}`}>
           <SubmitButton
-            pictureAdded={pictureAdded && reviewContent !== ""}
-            disabled={!pictureAdded || reviewContent === ""}
+            pictureAdded={reviewContent === ""}
+            disabled={reviewContent.length === 0}
             onClick={handleSubmit}
           >
             리뷰 등록하기
@@ -161,12 +182,8 @@ const SubmitButton = styled.button<{
   width: 520px;
   height: 56px;
   border-radius: 8px;
-  background-color: ${({ theme, pictureAdded, disabled }) =>
-    pictureAdded
-      ? disabled
-        ? theme.colors.gray200
-        : theme.colors.main500
-      : theme.colors.gray200};
+  background-color: ${({ theme, pictureAdded  }) =>
+    pictureAdded ? theme.colors.gray200 : theme.colors.main500};
   border: none;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   display: flex;

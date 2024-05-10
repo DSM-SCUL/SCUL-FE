@@ -33,7 +33,7 @@ const Router = createBrowserRouter([
         element: <BookMarkPage />
       },
       {
-        path: "/write",
+        path: "/write/:id",
         element: <ReviewWritePage />,
       },
       {

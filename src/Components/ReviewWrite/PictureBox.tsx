@@ -8,48 +8,32 @@ interface PictrueBoxProps {
     onPictureAdded: (urls: string[]) => void;
 }
 
-export const PictureBox: React.FC<PictrueBoxProps> = ({onPictureAdded}) => {
+export const PictureBox: React.FC<PictrueBoxProps> = ({ onPictureAdded }) => {
     const [pictureUrls, setPictureUrls] = useState<string[]>([]);
-    const [previewImg, setPreviewImg] = useState<any>();
+    const [img, setImg] = useState<string[]>([]);
     const ref = useRef<HTMLInputElement>(null);
 
-    const handlePictureAdd = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedImages = e.target.files;
+    const handlePreview = async (e: any) => {
+        const selectedImages = e.target.files[0];
         if (selectedImages) {
-            const imagesArray = Array.from(selectedImages);
-    
-            for (const image of imagesArray) {
-                try {
-                    const formData = new FormData();
-                    formData.append('image', image);
-                    const response = await instance.post('/cultures/images', formData);
-                    const data = response.data;
-                    setPictureUrls(prevUrls => [...prevUrls, data]);
-    
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        if (reader.readyState === 2) {
-                            setPreviewImg(reader.result);
-                        }
-                    };
-                    reader.readAsDataURL(image);
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        }
-    }
-    
-    const handlePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedImages = e.target.files;
-        if (selectedImages && selectedImages.length > 0) {
-            const reader = new FileReader();
+            const reader: FileReader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    setPreviewImg(reader.result);
+                    const imageUrl = reader.result as string;
+                    setPictureUrls(prevUrls => [...prevUrls, imageUrl]);
                 }
             };
-            reader.readAsDataURL(selectedImages[0]); 
+            reader.readAsDataURL(selectedImages);
+            try {
+                const formData = new FormData();
+                formData.append("image", selectedImages);
+                const response = await instance.post('/cultures/image', formData);
+                const responseData = response.data;
+                setImg((prev) => [...prev, responseData]);
+                console.log(img);
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -58,13 +42,12 @@ export const PictureBox: React.FC<PictrueBoxProps> = ({onPictureAdded}) => {
             <p>사진</p>
             <PictureWrapper>
                 <AddButtonBox onClick={() => ref.current?.click()}>
-                    <input 
-                        type="file" 
-                        style={{display:'none'}}
+                    <input
+                        type="file"
+                        style={{ display: 'none' }}
                         ref={ref}
                         onChange={(e) => {
-                            handlePreview(e); 
-                            handlePictureAdd(e);
+                            handlePreview(e);
                         }}
                         accept="image/*"
                         multiple
@@ -72,9 +55,8 @@ export const PictureBox: React.FC<PictrueBoxProps> = ({onPictureAdded}) => {
                     <img src={AddButton} alt="버튼" />
                 </AddButtonBox>
                 {pictureUrls.map((url, index) => (
-                    <Picture key={index} src={url}/>
+                    <Picture key={index} src={url} />
                 ))}
-                {previewImg && <Picture src={previewImg as string} />}
             </PictureWrapper>
         </PictureContainer>
     )
@@ -93,6 +75,7 @@ const PictureContainer = styled.div`
 const PictureWrapper = styled.div`
     display: flex;
     gap: 8px;
+    object-fit: contain;
 `;
 
 const AddButtonBox = styled.div`

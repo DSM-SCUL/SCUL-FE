@@ -19,6 +19,7 @@ export type NameType = {
 export type ReviewWriteType = {
   content: string;
   imageUrls: string[];
+  placeName: string | undefined;
 }
 
 /*cultures*/

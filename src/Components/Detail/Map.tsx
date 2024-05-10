@@ -38,7 +38,7 @@ export const MapComponent = () => {
             cultureDetail.ycoordinate || 0,
             cultureDetail.xcoordinate || 0
           ),
-          level: 3,
+          level: 5,
         };
         const map = new window.kakao.maps.Map(container, options);
 
