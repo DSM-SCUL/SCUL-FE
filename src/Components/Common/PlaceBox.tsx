@@ -21,37 +21,10 @@ export const PlaceBox = ({ lists }: ListProps) => {
     <Asdf>
       {lists.map((list: CultureListType, index: number) => (
         <Container key={index}>
-          <Link to={`/cultures/detail/${list.id}`}>
-            <Picture src={list.imageUrl} />
-          </Link>
-          <PlaceInfoWrapper>
-            <PlaceInfo>
-              <Link to={`/cultures/detail/${list.id}`}>
-                <Name>{list.cultureName}</Name>
-              </Link>
-              <Address>
-                {list.location}&nbsp;
-                {list.placeName}
-              </Address>
-              <ReservePriceWrapper>
-                <ReservePrice>
-                  예약 <p>{list.isApplicationAble ? "가능" : "불가능"}</p>
-                </ReservePrice>
-                <ReservePrice>
-                  이용료 <p>{list.ticketPrice}</p>
-                </ReservePrice>
-              </ReservePriceWrapper>
-              <TagWrapper>
-                <Tag>{list.wantedPeople}</Tag>
-              </TagWrapper>
-            </PlaceInfo>
-            <BookMark
-              src={list.isBookMarked ? BookMarkColorIcon : BookMarkIcon}
-              onClick={() => toggleBookmark(list.id)}
-            />
-          </PlaceInfoWrapper>
           <div>
-            <Picture src={list.imageUrl} />
+            <Link to={`/cultures/detail/${list.id}`}>
+              <Picture src={list.imageUrl} />
+            </Link>
             <PlaceInfoWrapper>
               <PlaceInfo>
                 <Link to={`/cultures/detail/${list.id}`}>
