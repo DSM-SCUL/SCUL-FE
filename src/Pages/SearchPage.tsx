@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import { SearchHeader } from "../Components/Common/SearchHeader";
-import { Tag } from "../Components/Main/Tag";
 import { PlaceBox } from "../Components/Common/PlaceBox";
-import Arrow from "../Assets/img/SVG/Arrow.svg";
 import NoResult from "../Assets/img/SVG/NoResult.svg";
 import { useEffect, useState } from "react";
 import { CultureListType } from "../types/type";
 import { getSearch } from "../Apis/cultures";
+import { Scroll } from "../Components/MyPage/Scroll";
 
 export const SearchPage = () => {
   const [searchResultExists, setSearchResultExists] = useState(true);
@@ -45,7 +44,7 @@ export const SearchPage = () => {
               <PlaceBox key={index} lists={[item]} />
             ))}
           </PlaceWrapper>
-          <ArrowIcon src={Arrow} />
+          <Scroll />
         </Wrapper>
       ) : (
         <SearchWrapper>
