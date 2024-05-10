@@ -5,6 +5,7 @@ import { Id } from "../Components/Common/Id";
 import { Password } from "../Components/Common/Password";
 import { signup } from "../Apis/users";
 import { CultureListType } from "../types/type";
+import { Link } from "react-router-dom";
 
 export const SignUpPage = () => {
   const [password, setPassword] = useState("");
@@ -96,9 +97,11 @@ export const SignUpPage = () => {
         <SignUp>
           이미 회원이라면?&nbsp;<a href="/login">로그인 하기</a>
         </SignUp>
-        <Button isActive={isButtonActive} onClick={handleLogin}>
-          가입하기
-        </Button>
+        <Link to={'/login'}>
+          <Button isActive={isButtonActive} onClick={handleLogin}>
+            가입하기
+          </Button>
+        </Link>
       </ButtonWrapper>
     </Container>
   );
@@ -169,4 +172,5 @@ const Button = styled.button<{ isActive: boolean }>`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.white};
   border: none;
+  cursor: pointer;
 `;
