@@ -26,11 +26,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "/MyReview",
-        element: <MyReviewPage />
+        element: <MyReviewPage />,
       },
       {
         path: "/BookMark",
-        element: <BookMarkPage />
+        element: <BookMarkPage />,
       },
       {
         path: "/write",

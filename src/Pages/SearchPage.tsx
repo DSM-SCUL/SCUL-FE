@@ -41,7 +41,6 @@ export const SearchPage = () => {
       <SearchHeader handleSearch={handleSearch} />
       {searchResultExists ? (
         <Wrapper>
-          <Tag />
           <PlaceWrapper>
             {list.map((item, index) => (
               <PlaceBox key={index} lists={[item]} />

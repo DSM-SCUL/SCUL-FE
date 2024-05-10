@@ -9,30 +9,44 @@ import { getCultureList, getSearch } from "../Apis/cultures";
 import { Header } from "../Components/Common/Header";
 
 export const MainPage = () => {
+  type a = "x" | "유아" | "장애인" | "노약자";
   const [list, setList] = useState<CultureListType[]>();
+  const [selected, setSelected] = useState<a>("x");
+  const [usuallyData, setUsuallyData] = useState<CultureListType[]>([]);
 
   useEffect(() => {
     getCultureList()
       .then((res) => {
         console.log(res.data);
         setList(res.data.culture);
+        setUsuallyData(res.data.culture);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  useEffect(() => {
-    setList([]);
-  }, []);
+  const handleTagClick = (tag: a) => {
+    setSelected(tag);
+  };
 
   return (
     <Container>
       <Header />
       <Wrapper>
         <Banner src={BannerImg} />
-        <MiddleContainer />
-        {list && <PlaceBox lists={list} />}
+        <MiddleContainer handleTagClick={handleTagClick} />
+        {list && (
+          <PlaceBox
+            lists={
+              selected === "x"
+                ? list
+                : list.filter((item) =>
+                    item.wantedPeople.includes(selected || "")
+                  )
+            }
+          />
+        )}
         <ArrowIcon src={Arrow} />
       </Wrapper>
     </Container>

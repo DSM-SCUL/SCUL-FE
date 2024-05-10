@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { TagProps } from "../../types/type";
 
-export const Tag = () => {
+export const Tag = ({ handleTagClick }: TagProps) => {
   return (
     <Container>
-      <Tag1>장애인 ♿️</Tag1>
-      <Tag2>유아 👶</Tag2>
-      <Tag3>노약자 🧓🏻</Tag3>
+      <Tag1 onClick={() => handleTagClick("장애인")}>장애인 ♿️</Tag1>
+      <Tag2 onClick={() => handleTagClick("유아")}>유아 👶</Tag2>
+      <Tag3 onClick={() => handleTagClick("노약자")}>노약자 🧓🏻</Tag3>
     </Container>
   );
 };

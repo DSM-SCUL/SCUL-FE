@@ -19,7 +19,7 @@ export type NameType = {
 export type ReviewWriteType = {
   content: string;
   imageUrls: string[];
-}
+};
 
 /*cultures*/
 export type CultureDetailType = {
@@ -43,7 +43,7 @@ export type CultureDetailType = {
   cultureLink: string;
   xcoordinate: number;
   ycoordinate: number;
-}
+};
 
 export type CultureListType = {
   id: string;
@@ -61,7 +61,8 @@ export type ListProps = {
   lists: CultureListType[];
 };
 
+type a = "x" | "유아" | "장애인" | "노약자";
+
 export type TagProps = {
-  lists: CultureListType[];
-  setFilteredLists: React.Dispatch<React.SetStateAction<CultureListType[]>>;
+  handleTagClick: (tag: a) => void;
 };
