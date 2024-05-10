@@ -21,7 +21,9 @@ export const PlaceBox = ({ lists }: ListProps) => {
     <Asdf>
       {lists.map((list: CultureListType, index: number) => (
         <Container key={index}>
-          <Picture src={list.imageUrl} />
+          <Link to={`/cultures/detail/${list.id}`}>
+            <Picture src={list.imageUrl} />
+          </Link>
           <PlaceInfoWrapper>
             <PlaceInfo>
               <Link to={`/cultures/detail/${list.id}`}>
@@ -78,6 +80,8 @@ const Container = styled.div`
 const Picture = styled.img`
   width: 100%;
   height: 120px;
+  border-radius: 4px;
+  cursor: pointer;
 `;
 
 const PlaceInfoWrapper = styled.div`

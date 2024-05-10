@@ -94,7 +94,7 @@ export const SignUpPage = () => {
       </Wrapper>
       <ButtonWrapper>
         <SignUp>
-          이미 회원이라면?&nbsp;<a href="/">로그인 하기</a>
+          이미 회원이라면?&nbsp;<a href="/login">로그인 하기</a>
         </SignUp>
         <Button isActive={isButtonActive} onClick={handleLogin}>
           가입하기

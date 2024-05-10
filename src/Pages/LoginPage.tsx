@@ -93,7 +93,7 @@ export const LoginPage = () => {
       </Wrapper>
       <ButtonWrapper>
         <SignUp>
-          아직 회원이 아니라면?&nbsp;<a href="/">회원가입 하기</a>
+          아직 회원이 아니라면?&nbsp;<a href="/signUp">회원가입 하기</a>
         </SignUp>
         <Button isActive={isButtonActive} onClick={handleLogin}>
           로그인

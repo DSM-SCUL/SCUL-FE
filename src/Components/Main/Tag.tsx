@@ -27,6 +27,7 @@ const Tag1 = styled.button`
     border: 1px solid ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.main500};
   }
+  cursor: pointer;
 `;
 
 const Tag2 = styled.button`
@@ -40,6 +41,7 @@ const Tag2 = styled.button`
     border: 1px solid ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.main300};
   }
+  cursor: pointer;
 `;
 
 const Tag3 = styled.button`
@@ -53,4 +55,5 @@ const Tag3 = styled.button`
     border: 1px solid ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.main400};
   }
+  cursor: pointer;
 `;
