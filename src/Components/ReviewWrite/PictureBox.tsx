@@ -3,16 +3,13 @@ import { useRef } from "react";
 import AddButton from "../../Assets/img/SVG/AddButton.svg";
 import { useState } from "react";
 import { instance } from "../../Apis/axios";
-
 interface PictrueBoxProps {
-    onPictureAdded: (urls: string[]) => void;
+    onPictureAdded?: (urls: string[]) => void;
+    setImageArray: any
 }
-
-export const PictureBox: React.FC<PictrueBoxProps> = ({ onPictureAdded }) => {
+export const PictureBox: React.FC<PictrueBoxProps> = ({ setImageArray }) => {
     const [pictureUrls, setPictureUrls] = useState<string[]>([]);
-    const [img, setImg] = useState<string[]>([]);
     const ref = useRef<HTMLInputElement>(null);
-
     const handlePreview = async (e: any) => {
         const selectedImages = e.target.files[0];
         if (selectedImages) {
@@ -28,15 +25,13 @@ export const PictureBox: React.FC<PictrueBoxProps> = ({ onPictureAdded }) => {
                 const formData = new FormData();
                 formData.append("image", selectedImages);
                 const response = await instance.post('/cultures/image', formData);
-                const responseData = response.data;
-                setImg((prev) => [...prev, responseData]);
-                console.log(img);
+                const responseData = response.data.imageUrls;
+                setImageArray((prev: any) => [...prev, responseData]);
             } catch (error) {
                 console.log(error);
             }
         }
     }
-
     return (
         <PictureContainer>
             <p>사진</p>
@@ -61,7 +56,6 @@ export const PictureBox: React.FC<PictrueBoxProps> = ({ onPictureAdded }) => {
         </PictureContainer>
     )
 }
-
 const PictureContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -71,13 +65,11 @@ const PictureContainer = styled.div`
         font-weight: 500;
     }
 `;
-
 const PictureWrapper = styled.div`
     display: flex;
     gap: 8px;
     object-fit: contain;
 `;
-
 const AddButtonBox = styled.div`
     display: flex;
     width: 100px;
@@ -88,7 +80,6 @@ const AddButtonBox = styled.div`
     justify-content: center;
     cursor: pointer;
 `;
-
 const Picture = styled.img`
     width: 100px;
     height: 100px;

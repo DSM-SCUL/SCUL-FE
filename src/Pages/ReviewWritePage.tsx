@@ -7,46 +7,34 @@ import { CultureListType } from "../types/type";
 import { ReviewWrite } from "../Apis/reviews";
 import { CultureDetail, createImgUrls } from "../Apis/cultures";
 import { CultureDetailType } from "../types/type";
-
 export const ReviewWritePage = () => {
-  const [pictureAdded, setPictureAdded] = useState(false);
+  const [, setPictureAdded] = useState(false);
   const [reviewContent, setReviewContent] = useState("");
+  const [imgurlArray, setImageArray] = useState<any[]>([]);
   const [, setList] = useState<CultureListType[]>([]);
   const [cultureDetail, setCultureDetail] = useState<CultureDetailType | null>();
   const {id} = useParams<{id: string}>();
   const reviewWriteMutation = ReviewWrite(id || '');
-
   useEffect(() => {
     setList([]);
   }, []);
-
   const handlePictureAdded = () => {
     setPictureAdded(true);
   };
-
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReviewContent(e.target.value);
   };
-
-  const handleSubmit = async () => {
-    const imageFiles: File[] = [];
-    const imageUrls = await Promise.all(
-      imageFiles.map((file) => createImgUrls(file))
-    );  
-
-    console.log({
-      content: reviewContent,
-      imageUrls: imageUrls.flat(),
-      placeName: cultureDetail?.placeName
-    });
-    
-    reviewWriteMutation.mutate({
-      content: reviewContent,
-      imageUrls: imageUrls.flat(),
-      placeName: cultureDetail?.placeName
-    });
+  const flattenArray = (arr: any[][]): any[] => {
+    return arr.reduce((acc, val) => acc.concat(val), []);
   };
-
+  const modifiedImgUrls = flattenArray(imgurlArray);
+  const handleSubmit = () => {
+      reviewWriteMutation.mutate({
+        content: reviewContent,
+        imageUrls: modifiedImgUrls,
+        placeName: cultureDetail?.placeName
+      });
+  };
   useEffect(() => {
     const fetchCultureDetail = async () => {
       try {
@@ -56,10 +44,8 @@ export const ReviewWritePage = () => {
         console.error("문화 생활 상세보기 에러: ", error);
       }
     };
-
     fetchCultureDetail();
   }, [id]);
-
   return (
     <>
       <Header />
@@ -88,7 +74,7 @@ export const ReviewWritePage = () => {
               onChange={handleContentChange}
             ></Content>
           </ContentBox>
-          <PictureBox onPictureAdded={handlePictureAdded} />
+          <PictureBox onPictureAdded={handlePictureAdded} setImageArray={setImageArray}/>
         </ReviewWriteWrapper>
         <Link to={`/cultures/detail/${id}`}>
           <SubmitButton
@@ -103,7 +89,6 @@ export const ReviewWritePage = () => {
     </>
   );
 };
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -112,7 +97,6 @@ const Wrapper = styled.div`
   gap: 100px;
   margin-top: calc(94px + 64px);
 `;
-
 const ReviewWriteWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -126,7 +110,6 @@ const ReviewWriteWrapper = styled.div`
     font-weight: 600;
   }
 `;
-
 const PlaceNameBox = styled.div`
   width: 520px;
   height: 56px;
@@ -135,21 +118,18 @@ const PlaceNameBox = styled.div`
   background-color: ${({ theme }) => theme.colors.gray50};
   border-radius: 8px;
 `;
-
 const PlaceNameTitle = styled.p`
   font-size: 20px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.gray400};
   margin-right: auto;
 `;
-
 const PlaceName = styled.p`
   font-size: 20px;
   font-weight: 500;
   color: black;
   margin-left: auto;
 `;
-
 const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -158,7 +138,6 @@ const ContentBox = styled.div`
     display: flex;
   }
 `;
-
 const Content = styled.textarea`
   height: 220px;
   background-color: ${({ theme }) => theme.colors.gray50};
@@ -169,12 +148,10 @@ const Content = styled.textarea`
   font-size: 16px;
   font-weight: 500;
   resize: none;
-
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray400};
   }
 `;
-
 const SubmitButton = styled.button<{
   pictureAdded: boolean;
   disabled: boolean;
