@@ -50,6 +50,35 @@ export const PlaceBox = ({ lists }: ListProps) => {
               onClick={() => toggleBookmark(list.id)}
             />
           </PlaceInfoWrapper>
+          <div>
+            <Picture src={list.imageUrl} />
+            <PlaceInfoWrapper>
+              <PlaceInfo>
+                <Link to={`/cultures/detail/${list.id}`}>
+                  <Name>{list.cultureName}</Name>
+                </Link>
+                <Address>
+                  {list.location}&nbsp;
+                  {list.placeName}
+                </Address>
+                <ReservePriceWrapper>
+                  <ReservePrice>
+                    예약 <p>{list.isApplicationAble ? "가능" : "불가능"}</p>
+                  </ReservePrice>
+                  <ReservePrice>
+                    이용료 <p>{list.ticketPrice}</p>
+                  </ReservePrice>
+                </ReservePriceWrapper>
+              </PlaceInfo>
+              <BookMark
+                src={list.isBookMarked ? BookMarkColorIcon : BookMarkIcon}
+                onClick={() => toggleBookmark(list.id)}
+              />
+            </PlaceInfoWrapper>
+          </div>
+          <TagWrapper>
+            <Tag>{list.wantedPeople}</Tag>
+          </TagWrapper>
         </Container>
       ))}
     </Asdf>
@@ -69,10 +98,10 @@ const Asdf = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  justify-content: space-between;
   border-radius: 8px;
   width: 302px;
-  height: 100%;
+  height: 105%;
   padding: 12px 20px;
   border: solid 1px #f3f3f3;
 `;
