@@ -89,6 +89,7 @@ const Picture = styled.img`
 const PlaceInfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 8px;
 `;
 
 const PlaceInfo = styled.div`
