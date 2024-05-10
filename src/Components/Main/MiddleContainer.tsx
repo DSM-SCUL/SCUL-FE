@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Tag } from "./Tag";
 import { useEffect, useState } from "react";
 import { getMyName } from "../../Apis/users";
-import { NameType } from "../../types/type";
+import { NameType, TagProps } from "../../types/type";
 
-export const MiddleContainer = () => {
+export const MiddleContainer = ({ handleTagClick }: TagProps) => {
   const [name, setName] = useState<NameType | undefined>();
   useEffect(() => {
     getMyName()
@@ -24,7 +24,7 @@ export const MiddleContainer = () => {
           ? `${name.name}님에게 추천하는 문화생활이에요`
           : "로그인하고 사용해주세요!"}
       </Text>
-      <Tag />
+      <Tag handleTagClick={handleTagClick} />
     </Container>
   );
 };

@@ -32,7 +32,7 @@ export const ReviewWritePage = () => {
     const imageFiles: File[] = [];
     const imageUrls = await Promise.all(
       imageFiles.map((file) => createImgUrls(file))
-    );
+    );  
 
     console.log({
       content: reviewContent,
