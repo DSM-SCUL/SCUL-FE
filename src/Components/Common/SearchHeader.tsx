@@ -15,16 +15,24 @@ export const SearchHeader = ({
   const [isMyPageModalVisible, setIsMyPageModalVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const ClickSearch = () => {
-    handleSearch(searchKeyword);
-  };
-
   const toggleMyPageModalVisibility = () => {
     setIsMyPageModalVisible((prevState) => !prevState);
   };
 
+  const ClickSearch = () => {
+    handleSearch(searchKeyword);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value);
+  };
+
+  const EnterSearch = () => {
+    handleSearch(searchKeyword);
+  };
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") EnterSearch();
   };
 
   const isLoggedIn = !!Cookie.get("access_token");
@@ -40,6 +48,7 @@ export const SearchHeader = ({
             placeholder="문화 생활 검색"
             value={searchKeyword}
             onChange={handleInputChange}
+            onKeyDown={handleEnter}
           />
           <SearchIcon src={Search} onClick={ClickSearch} />
         </InputContainer>

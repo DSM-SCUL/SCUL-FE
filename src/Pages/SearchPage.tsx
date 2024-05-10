@@ -15,15 +15,14 @@ export const SearchPage = () => {
   useEffect(() => {
     setList([]);
     setSearchResultExists(true);
-  }, []);
+  }, [setSearchResultExists]);
 
   const handleSearch = (keyword: string) => {
     if (keyword.trim() !== "") {
       getSearch(keyword.trim())
         .then((response: any) => {
           setList(response.data.culture);
-          console.log(response.data.culture);
-          setSearchResultExists(true);
+          setSearchResultExists(response.data.culture.length > 0);
         })
         .catch((error) => {
           console.error(error);
@@ -49,10 +48,10 @@ export const SearchPage = () => {
           <ArrowIcon src={Arrow} />
         </Wrapper>
       ) : (
-        <Wrapper>
+        <SearchWrapper>
           <NoSearchResult src={NoResult} />
           <Text>검색 결과가 없습니다.</Text>
-        </Wrapper>
+        </SearchWrapper>
       )}
     </Container>
   );
@@ -61,11 +60,21 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const Wrapper = styled.div`
+const SearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  gap: 36px;
+  max-width: 960px;
+  width: 100%;
+  margin: 92px auto auto;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   gap: 36px;
   max-width: 960px;
